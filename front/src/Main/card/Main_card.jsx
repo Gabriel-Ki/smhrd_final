@@ -1,7 +1,18 @@
 import React, { useState } from 'react'
-import '../card/Main_card.css'
+import './Main_card.css'
 
 const Main_card = () => {
+
+    const[logs,setLogs]=useState([
+        {time: "12:10", message: '목적지 출발'},
+        {time: "12:14", message: "엘레베이터 대기 중"},
+        {time: "12:18", message: "엘레베이터 탑승"},
+        {time: "12:20", message: "버튼 인식"}
+    ])
+
+    const addLog=(newLog)=>{
+        setLogs((prevLogs)=>[...prevLogs,newLog].slice(-4));
+    }
 
     const [status,setStatus]=useState('작업 중');
 
@@ -12,13 +23,13 @@ const Main_card = () => {
     };
 
     return (
-        <div className='alal'>
+        <div className='info-container'>
             <div className='Mainheader'>
                 <img src="./img/robot.png" alt="robot" width='30px' height='30px'/>
                 <h2> 프로그램명- 숫자</h2>
                 <div 
                 className='status-dot' style={{backgroundColor: statusColors[status], width: 8, height: 8, borderRadius:50 }}></div>
-                <h4 className='robot-status'>{status}</h4>
+                <h3 className='robot-status'>{status}</h3>
             </div>
             <div className="progress-container"> 
                 <div className="progress-line">
@@ -26,6 +37,15 @@ const Main_card = () => {
                     <h3 className="progress-text">진행도 N%</h3>
                     <span className="end-label">목적지</span>
                 </div>
+            </div>
+
+            <div className='log-container'>
+                {logs.map((log, index)=>(
+                    <div key={index} className='log-item'>
+                        <span className='log-message'>{log.message}</span>
+                        <span className='log-time'>{log.time}</span>
+                    </div>
+                ))}
             </div>
 
         </div>
