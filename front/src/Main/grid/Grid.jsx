@@ -8,7 +8,7 @@ const Grid = ({robots}) => {
   return (
     <div className='card-grid'>
         {robots.map((robot)=>(
-            <Maincard key={robot.id} data={robot}/>
+            <Maincard key={robot.id} data={robot} robot={robot}/>
         ))}
     </div>
   )
