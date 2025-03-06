@@ -1,6 +1,6 @@
 import React from 'react'
-import Grid from '../grid/Grid'
-import Mainheader from '../header/Main_header'
+import Grid from '../components/grid/Grid'
+import Mainheader from '../components/header/Main_header'
 
 const robots=[
     {id:1, name: '프로그램명 -1 ', status: '작업 중'},/* api로 값 가져와서 넣은 곳 */

@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Maincard from '../card/Main_card'
-import '../grid/grid.css'
+import './grid.css'
 
 const Grid = ({robots}) => {
+
+  // const [robots, setRobots]=useState
 
 
   return (
@@ -14,4 +16,4 @@ const Grid = ({robots}) => {
   )
 }
 
-export default Grid
+export default Grid 
