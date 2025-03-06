@@ -1,5 +1,5 @@
 const mysql = require('mysql2');
-const config = require('./config'); // 설정 파일 가져오기
+const config = require('./config/config'); // 설정 파일 가져오기
 
 // MySQL 연결 풀 생성
 const pool = mysql.createPool({
