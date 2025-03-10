@@ -10,13 +10,13 @@ const Sidebar=({robots,robotId})=>{
     return "";
   }
 
-  if(!selectRobot){
-    return (
-      <div className='sidebar-noSelect'>
-        로봇을 선택하세요
-      </div>
-    )
-  }
+  // if(!selectRobot){
+  //   return (
+  //     <div className='sidebar-noSelect'>
+  //       로봇을 선택하세요
+  //     </div>
+  //   )
+  // }
 
 
   return (
@@ -25,7 +25,7 @@ const Sidebar=({robots,robotId})=>{
           {/* 헤더 */}
           <div className='sidebar-header'>
             <img src="./img/robot.png" alt="robot" width='30px' height='30px'/>
-            <h2 className="sidebar-header-text">{robot.name}</h2>
+            {/* <h2 className="sidebar-header-text">{robot.name}</h2> */}
           </div>
           {/* 주문 번호, 매장 */}
           <div className='sidebar-orderinfo'>
@@ -36,8 +36,8 @@ const Sidebar=({robots,robotId})=>{
           {/* 배달 상태 */}
           <div className="sidebar-delivery-status">
             <div className="sidebar-status-group">
-              <div className={`sidebar-status-icon ${getStatusClass(robot.status)}`} />
-              <span className="sidebar-status-text">{robot.status}</span>
+              {/* <div className={`sidebar-status-icon ${getStatusClass(robot.status)}`} /> */}
+              {/* <span className="sidebar-status-text">{robot.status}</span> */}
             </div>
           </div>
           {/* 도착지 정보 */}
@@ -50,18 +50,20 @@ const Sidebar=({robots,robotId})=>{
           <div className="order-items">
               <p className="order-title">주문내역</p>
               <ul>
-                {robot.items?.map((item, index) => (
-                  // <li key={index}>{item.name} - {item.price}원</li>
+                {/* {robot.items?.map((item, index) => (
+                  
                   <>
-                    // <li key={index}>{item.name} - {item.price}원</li>
-                    <li key={index}>{item.name}</li><li>{item.price}</li></>
-                ))}
+                    <li key={index}>{item.name}</li>
+                    <li>{item.price}</li>
+                  </>
+                ))} */}
+  
               </ul>
           </div>
           <hr />
           <div className="order-total">
             <p >총액 </p> 
-            <p>{selectRobot.totalPrice}원</p>
+            {/* <p>{selectRobot.totalPrice}원</p> */}
           </div>
         </div>
     </div>

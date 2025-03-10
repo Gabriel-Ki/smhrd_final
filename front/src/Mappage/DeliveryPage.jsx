@@ -16,8 +16,11 @@ const DeliveryPage = () => {
   useEffect(()=>{
     const axiosRobot=async ()=>{
       try{
-        const response= await axios.get('/robot'); // 경로 수정하고 로봇 6개의 정보를 여기로 출력
+        const response= await axios.get('http://localhost:5000/robots'); // 경로 수정하고 로봇 6개의 정보를 여기로 출력
         setRobots(response.data);
+        console.log(response.data);
+        console.log(response);
+        console.log(robots);
       } catch(error){
         console.error('로봇 정보를 가져오는 중 오류 :', error);
       } 
