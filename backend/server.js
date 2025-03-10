@@ -21,13 +21,13 @@ const PORT = process.env.PORT || 5000;
 
 // 미들웨어 설정
 app.use(cors());
-app.use(bp.json());
+// app.use(bp.json());
 app.use(express.json()); // JSON 요청 본문 파싱
 
 // 라우터 설정
 app.use('/api/auth', authRouter);
 // app.use('/api/protected', protectedRouter);
-app.use('/', mainRouter)
+app.use('/api', mainRouter)
 // app.use('/api', mainRouter);\
 app.use('/api/card', cardRouter);
 app.use('/api/mainheader', mainheaderRouter);
