@@ -1,46 +1,47 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-require('dotenv').config();
 
-// 라우터 가져오기
-const authRouter = require('./router/map/authRouter');
-const cardRouter = require('./router/map/cardRouter');
-const deliveryRouter = require('./router/map/deliveryRouter');
-const gridRouter = require('./router/map/gridRouter');
-const mainheaderRouter = require('./router/map/headerRouter');
-const mainRouter = require('./router/map/mainRouter');
-const protectedRouter = require('./router/map/protectedRouter');
-const sideRouter = require('./router/map/sideRouter');
-const userRouter = require('./router/map/userRouter');
+const authRouter = require('./router/authRouter');
+const protectedRouter = require('./router/protectedRouter');
+const mainRouter = require('./router/mainRouter');
+const cardRouter = require('./router/cardRouter');
+const mainheaderRouter = require('./router/mainheaderRouter')
 const headerRouter = require('./router/headerRouter');
+const gridRouter = require('./router/gridRouter');
+const KakaomapRouter = require('./router/map/kakaomapRouter');
+const naviRouter = require('./router/map/naviRouter')
+const robotmakerRouter = require('./router/map/robotmakerRouter');
+const sideRouter= require('./router/sideRouter');
+const deliveryRouter= require('./router/deliveryRouter');
 
-// Express 앱 생성
 const app = express();
+const PORT = process.env.PORT || 5000;
 
 // 미들웨어 설정
-app.use(cors()); // CORS 정책 허용
+app.use(cors());
 app.use(express.json()); // JSON 요청 본문 파싱
 
-
-// API 라우터 설정
+// 라우터 설정
 app.use('/api/auth', authRouter);
-app.use('/api/card', cardRouter);
-app.use('/api/delivery', deliveryRouter);
-app.use('/api/grid', gridRouter);
-app.use('/api/mainheader', mainheaderRouter);
-app.use('/api', mainRouter);
 app.use('/api/protected', protectedRouter);
+app.use('/api', mainRouter);
+app.use('/api/card', cardRouter);
+app.use('/api/mainheader', mainheaderRouter);
+app.use('/api/header', headerRouter);
+app.use('/api/gird', gridRouter);
+app.use('/api/kakao', KakaomapRouter);
+app.use('api/navi', naviRouter);
+app.use('api/robotmaker', robotmakerRouter);
 app.use('/api/side', sideRouter);
-app.use('/api/user', userRouter);
-app.use('/api', headerRouter);
+app.use('/api/delivery', deliveryRouter);
 
-// 기본 경로 (서버 상태 확인용)
+// 기본 응답
 app.get('/', (req, res) => {
-    res.send('🚀 Server is running...');
+    res.send('🚀 배달 로봇 시스템 백엔드 서버 실행 중');
 });
 
-// 포트 설정
-const PORT = process.env.PORT || 5000;
+// 서버 실행
 app.listen(PORT, () => {
-    console.log(` http://localhost:${PORT}`);
+    console.log(`서버가 http://localhost:${PORT} 에서 실행 중입니다.`);
 });
