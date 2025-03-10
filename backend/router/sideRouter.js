@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-// 샘플 배달 데이터 (DB 대체용)
-let deliveries = [
+// 샘플 주문 데이터 (DB 대체용)
+let orders = [
     {
         id: 1,
         robotId: 101,
@@ -29,43 +29,43 @@ let deliveries = [
     }
 ];
 
-// 모든 배달 조회 API
-router.get('/deliveries', (req, res) => {
-    res.json(deliveries);
+// 모든 주문 조회 API
+router.get('/orders', (req, res) => {
+    res.json(orders);
 });
 
-// 특정 로봇의 배달 조회 API
-router.get('/deliveries/:robotId', (req, res) => {
+// 특정 로봇의 주문 조회 API
+router.get('/orders/:robotId', (req, res) => {
     const robotId = parseInt(req.params.robotId, 10);
-    const delivery = deliveries.find(d => d.robotId === robotId);
+    const order = orders.find(o => o.robotId === robotId);
 
-    if (delivery) {
-        res.json(delivery);
+    if (order) {
+        res.json(order);
     } else {
-        res.status(404).json({ error: "해당 로봇의 배달 정보를 찾을 수 없습니다." });
+        res.status(404).json({ error: "해당 로봇의 주문 정보를 찾을 수 없습니다." });
     }
 });
 
-// 배달 상태 업데이트 API (PUT)
-router.put('/deliveries/:robotId', (req, res) => {
+// 주문 상태 업데이트 API
+router.put('/orders/:robotId', (req, res) => {
     const robotId = parseInt(req.params.robotId, 10);
     const { status } = req.body;
-    const delivery = deliveries.find(d => d.robotId === robotId);
+    const order = orders.find(o => o.robotId === robotId);
 
-    if (!delivery) {
-        return res.status(404).json({ error: "해당 로봇의 배달 정보를 찾을 수 없습니다." });
+    if (!order) {
+        return res.status(404).json({ error: "해당 로봇의 주문 정보를 찾을 수 없습니다." });
     }
 
     if (!status) {
         return res.status(400).json({ error: "상태 값을 입력하세요." });
     }
 
-    delivery.status = status;
-    res.json(delivery);
+    order.status = status;
+    res.json(order);
 });
 
-// 배달 추가 API (POST)
-router.post('/deliveries', (req, res) => {
+// 주문 추가 API (POST)
+router.post('/orders', (req, res) => {
     const { robotId, robotName, status, destination, items } = req.body;
 
     if (!robotId || !robotName || !status || !destination || !items) {
@@ -74,8 +74,8 @@ router.post('/deliveries', (req, res) => {
 
     const totalPrice = items.reduce((sum, item) => sum + item.price, 0);
 
-    const newDelivery = {
-        id: deliveries.length + 1,
+    const newOrder = {
+        id: orders.length + 1,
         robotId,
         robotName,
         status,
@@ -84,16 +84,16 @@ router.post('/deliveries', (req, res) => {
         totalPrice
     };
 
-    deliveries.push(newDelivery);
-    res.status(201).json(newDelivery);
+    orders.push(newOrder);
+    res.status(201).json(newOrder);
 });
 
-// 배달 삭제 API (DELETE)
-router.delete('/deliveries/:robotId', (req, res) => {
+// 주문 삭제 API (DELETE)
+router.delete('/orders/:robotId', (req, res) => {
     const robotId = parseInt(req.params.robotId, 10);
-    deliveries = deliveries.filter(d => d.robotId !== robotId);
+    orders = orders.filter(o => o.robotId !== robotId);
 
-    res.json({ message: "배달이 삭제되었습니다." });
+    res.json({ message: "주문이 삭제되었습니다." });
 });
 
 module.exports = router;

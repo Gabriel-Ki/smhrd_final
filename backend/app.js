@@ -8,6 +8,11 @@ const mainRouter = require('./router/mainRouter');
 const cardRouter = require('./router/cardRouter');
 const headerRouter = require('./router/headerRouter');
 const gridRouter = require('./router/gridRouter');
+const KakaomapRouter = require('./router/map/kakaomapRouter');
+const naviRouter = require('./router/map/naviRouter')
+const robotmakerRouter = require('./router/map/robotmakerRouter');
+const sideRouter= require('./router/sideRouter');
+const deliveryRouter= require('./router/deliveryRouter');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -19,10 +24,15 @@ app.use(express.json()); // JSON 요청 본문 파싱
 // 라우터 설정
 app.use('/api/auth', authRouter);
 app.use('/api/protected', protectedRouter);
-app.use('/api', mainRouter)
+app.use('/api', mainRouter);
 app.use('/api/card', cardRouter);
 app.use('/api/header', headerRouter);
-app.use('/api/gird', gridRouter)
+app.use('/api/gird', gridRouter);
+app.use('/api/kakao', KakaomapRouter);
+app.use('api/navi', naviRouter);
+app.use('api/robotmaker', robotmakerRouter);
+app.use('/api/side', sideRouter);
+app.use('/api/delivery', deliveryRouter);
 
 // 기본 응답
 app.get('/', (req, res) => {
