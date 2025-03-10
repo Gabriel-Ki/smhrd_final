@@ -26,12 +26,9 @@ app.use(express.json()); // JSON 요청 본문 파싱
 
 // 라우터 설정
 app.use('/api/auth', authRouter);
-app.use('/api/protected', protectedRouter);
-<<<<<<< HEAD:backend/app.js
+// app.use('/api/protected', protectedRouter);
 app.use('/', mainRouter)
-=======
-app.use('/api', mainRouter);
->>>>>>> 7f810b6eb7c0bebe47cfb6599241c2673473df7f:backend/server.js
+// app.use('/api', mainRouter);\
 app.use('/api/card', cardRouter);
 app.use('/api/mainheader', mainheaderRouter);
 app.use('/api/header', headerRouter);
