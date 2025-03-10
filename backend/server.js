@@ -7,8 +7,14 @@ const authRouter = require('./router/authRouter');
 const protectedRouter = require('./router/protectedRouter');
 const mainRouter = require('./router/mainRouter');
 const cardRouter = require('./router/cardRouter');
+const mainheaderRouter = require('./router/mainheaderRouter')
 const headerRouter = require('./router/headerRouter');
 const gridRouter = require('./router/gridRouter');
+const KakaomapRouter = require('./router/map/kakaomapRouter');
+const naviRouter = require('./router/map/naviRouter')
+const robotmakerRouter = require('./router/map/robotmakerRouter');
+const sideRouter= require('./router/sideRouter');
+const deliveryRouter= require('./router/deliveryRouter');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -21,10 +27,20 @@ app.use(express.json()); // JSON 요청 본문 파싱
 // 라우터 설정
 app.use('/api/auth', authRouter);
 app.use('/api/protected', protectedRouter);
+<<<<<<< HEAD:backend/app.js
 app.use('/', mainRouter)
+=======
+app.use('/api', mainRouter);
+>>>>>>> 7f810b6eb7c0bebe47cfb6599241c2673473df7f:backend/server.js
 app.use('/api/card', cardRouter);
+app.use('/api/mainheader', mainheaderRouter);
 app.use('/api/header', headerRouter);
-app.use('/api/gird', gridRouter)
+app.use('/api/gird', gridRouter);
+app.use('/api/kakao', KakaomapRouter);
+app.use('api/navi', naviRouter);
+app.use('api/robotmaker', robotmakerRouter);
+app.use('/api/side', sideRouter);
+app.use('/api/delivery', deliveryRouter);
 
 // 기본 응답
 app.get('/', (req, res) => {
