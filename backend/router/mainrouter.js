@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const conn=require('../config/config')
 
 // 샘플 데이터 (API가 제공하는 로봇 상태 데이터)
 // const robots = [
@@ -12,15 +13,18 @@ const router = express.Router();
 // ];
 
 // 모든 로봇 데이터를 반환하는 API
-router.get('/robots',async (req, res) => {
-    try {
-      const [rows] = await pool.query('SELECT * FROM js_users');
-      res.json(rows);
-    } catch (error) {
-      console.error('쿼리 실행 실패:', error);
-      res.status(500).json({ message: '서버 오류' });
-    }
-    res.json(robots);
+router.get('/robots', (req, res) => {
+    const sql='select * from js_robot_delivery';
+    conn.query(sql,(err,results)=>{
+        if(err){
+            console.log(err);
+            return res.status(500).json({error : '연결 실패', details:err.message})
+        }else{
+            res.status(200).json({message : '연결 성공'})
+            console.log(res);
+        }
+    })
+
 });
 
 // 특정 ID의 로봇을 반환하는 API
