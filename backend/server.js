@@ -26,6 +26,7 @@ app.use(express.json()); // JSON 요청 본문 파싱
 
 
 // 라우터 설정
+
 app.use('/auth', authRouter);
 app.use('/protected', protectedRouter);
 app.use('/', mainRouter);
@@ -39,6 +40,7 @@ app.use('/robotmaker', robotmakerRouter);
 app.use('/side', sideRouter);
 app.use('/delivery', deliveryRouter);
 app.use('/db', dbRouter);
+main
 
 // 기본 응답
 app.get('/', (req, res) => {
