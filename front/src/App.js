@@ -13,8 +13,8 @@ function App() {
       {/* <MainDash/> */}
       {/* <Main_card/> */}
       {/* <Grid/> */}
-      {/* <Maindash/> */}
-      <DeliveryPage></DeliveryPage>
+      <Maindash/>
+      {/* <DeliveryPage></DeliveryPage> */}
     </div>
   );
 }

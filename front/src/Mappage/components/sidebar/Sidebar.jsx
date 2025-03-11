@@ -2,21 +2,28 @@ import { useState } from 'react';
 // import '../sidebar/sidebar.css'
 import '../sidebar/side.css'
 
-const Sidebar=({robots,robotId})=>{
+const Sidebar=({clickRobot})=>{
+
+  if (!clickRobot){
+    return(
+      <div className='sidbar-noselect'>
+        로봇을 선택하세요
+      </div>
+    )
+  }
+
 
   const getStatusClass=(status)=>{
-    if(status=='배송 중') return "delivery";
-    if(status=='대기 중') return "waiting";
+    if(status==='이동 중') return "delivery";
+    if(status==='대기') return "waiting";
     return "";
   }
 
-  // if(!selectRobot){
-  //   return (
-  //     <div className='sidebar-noSelect'>
-  //       로봇을 선택하세요
-  //     </div>
-  //   )
-  // }
+  // console.log(clickRobot);
+
+  
+
+
 
 
   return (
@@ -25,7 +32,7 @@ const Sidebar=({robots,robotId})=>{
           {/* 헤더 */}
           <div className='sidebar-header'>
             <img src="./img/robot.png" alt="robot" width='30px' height='30px'/>
-            {/* <h2 className="sidebar-header-text">{robot.name}</h2> */}
+            <h2 className="sidebar-header-text">{clickRobot.robot_id}</h2>
           </div>
           {/* 주문 번호, 매장 */}
           <div className='sidebar-orderinfo'>
@@ -36,13 +43,13 @@ const Sidebar=({robots,robotId})=>{
           {/* 배달 상태 */}
           <div className="sidebar-delivery-status">
             <div className="sidebar-status-group">
-              {/* <div className={`sidebar-status-icon ${getStatusClass(robot.status)}`} /> */}
-              {/* <span className="sidebar-status-text">{robot.status}</span> */}
+              <div className={`sidebar-status-icon ${getStatusClass(clickRobot.status)}`} />
+              <span className="sidebar-status-text">{clickRobot.status}</span>
             </div>
           </div>
           {/* 도착지 정보 */}
           <div className='sidebar-destination'>
-            <h3>도착지 :</h3>  {/* 여기 값 가져와서 띄우기 */}
+            <h3>도착지 : {clickRobot.destination}</h3>  
             <h3>도착 예상 시간: </h3> {/* 여기는 네비게이션 api에서 뜨는 값을 출력하는건가? */}
           </div>
           <hr/>
