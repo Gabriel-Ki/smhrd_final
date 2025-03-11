@@ -1,10 +1,32 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Main_card.css'
+import axios from 'axios';
 
 const Main_card = ({robot}) => {
- 
 
-    console.log(robot)
+    const [logs,setLogs]=useState([]);
+
+
+    // console.log(robot)
+
+    useEffect(()=>{
+        const axiosCard=async ()=>{
+            try{
+                const response=await axios.get('http://localhost:5000/log');
+                setLogs(response.data);
+            }catch(err){
+                console.error('api 통신 오류:', err)
+            }
+        }
+        axiosCard();
+
+        const interlog=setInterval(axiosCard,10000);
+
+        return ()=>clearInterval(interlog);
+    },[]);
+
+    const filteredLogs=logs.filter(log=>log.robot_id === robot.robot_id)
+    console.log(filteredLogs)
 
     // const addLog=(newLog)=>{
     //     setLogs((prevLogs)=>[...prevLogs,newLog].slice(-4));
@@ -35,17 +57,17 @@ const Main_card = ({robot}) => {
             </div>
 
             <div className='log-container'>
-                {/* {logs.map((log, index)=>(
-                    <div key={index} className='log-item'>
-                        <span className='log-message'>{log.message}</span>
-                        <span className='log-time'>{log.time}</span>
-                    </div>
-                ))} */}
-                <div className='log-item'>
-                    <span className='log-message'>{robot.log_m}</span>
-                    <span className='log-time'>{robot.log_t}</span>
-                </div>
-                
+
+                {filteredLogs?.length > 0 ? (
+                    filteredLogs.map((log, index) => (
+                        <div key={index} className='log-item'>
+                            <span className='log-message'>{log.log_m}</span>
+                            <span className='log-time'>{log.log_t}</span>
+                        </div>
+                    ))
+                ) : (
+                    <p>로그 데이터 없음</p> // 데이터가 없을 때 기본 메시지 표시
+                )} 
             </div>
 
         </div>
