@@ -26,19 +26,19 @@ app.use(express.json()); // JSON 요청 본문 파싱
 
 
 // 라우터 설정
-app.use('/api/auth', authRouter);
-app.use('/api/protected', protectedRouter);
+app.use('/auth', authRouter);
+app.use('/protected', protectedRouter);
 app.use('/', mainRouter);
-app.use('/api/card', cardRouter);
-app.use('/api/mainheader', mainheaderRouter);
-app.use('/api/header', headerRouter);
-app.use('/api/gird', gridRouter);
-app.use('/api/kakao', KakaomapRouter);
-app.use('api/navi', naviRouter);
-app.use('api/robotmaker', robotmakerRouter);
-app.use('/api/side', sideRouter);
-app.use('/api/delivery', deliveryRouter);
-app.use('/api/db', dbRouter);
+app.use('/card', cardRouter);
+app.use('/mainheader', mainheaderRouter);
+app.use('/', headerRouter);
+app.use('/gird', gridRouter);
+app.use('/kakao', KakaomapRouter);
+app.use('/navi', naviRouter);
+app.use('/robotmaker', robotmakerRouter);
+app.use('/side', sideRouter);
+app.use('/delivery', deliveryRouter);
+app.use('/db', dbRouter);
 
 // 기본 응답
 app.get('/', (req, res) => {
