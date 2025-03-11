@@ -20,19 +20,8 @@ app.use(cors({
     origin : 'http://localhost:3000'
 }));
 app.use(bp.json());
-// app.use(express.json()); // JSON 요청 본문 파싱
-
-// 라우터 설정
-// app.use('/api/auth', authRouter);
-// app.use('/api/protected', protectedRouter);
-// app.use('/api/', mainRouter)
 app.use('/robot', robotRouter);
 app.use('/', mainRouter)
-
-// app.use('/api/card', cardRouter);
-// app.use('/api/header', headerRouter);
-// app.use('/api/gird', gridRouter)
-
 // 기본 응답
 app.get('/', (req, res) => {
     res.send('🚀 배달 로봇 시스템 백엔드 서버 실행 중');
