@@ -1,15 +1,15 @@
-// const mysql=require()
+const mysql=require('mysql2')
 
 require('dotenv').config(); // .env 파일 로드
 
 module.exports = {
-  db: {
+db: {
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASS,
     database: process.env.DB_NAME,
     port: process.env.DB_PORT || 3307
-  }
+}
 };
 
 // const conn=mysql.createConnection({
@@ -19,3 +19,6 @@ module.exports = {
 //     database: process.env.DB_NAME,
 //     port: process.env.DB_PORT
 // })
+
+// conn.connect()
+// module.exports=conn;
