@@ -5,6 +5,8 @@ import Main_card from './Main/components/card/Main_card';
 import Grid from './Main/components/grid/Grid';
 import Maindash from './Main/maindash/Maindash';
 import DeliveryPage from './Mappage/DeliveryPage';
+import OrderItem from './orderList/components/order/OrderItem';
+import Orderpage from './orderList/Orderpage'
 
 
 function App() {
@@ -13,7 +15,9 @@ function App() {
       {/* <MainDash/> */}
       {/* <Main_card/> */}
       {/* <Grid/> */}
-      <Maindash/>
+      {/* <Maindash/> */}
+      {/* <OrderItem/> */}
+      <Orderpage/>
       {/* <DeliveryPage></DeliveryPage> */}
     </div>
   );

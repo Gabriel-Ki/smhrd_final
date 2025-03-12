@@ -112,6 +112,7 @@
     width: 100%;
     max-width: 470px;
     margin: 0 auto;
+    margin-bottom: 40px;
     border: 2px solid black;
     border-radius: 15px;
     box-shadow: 2px 2px 10px rgba(0,0,0,0.5);
