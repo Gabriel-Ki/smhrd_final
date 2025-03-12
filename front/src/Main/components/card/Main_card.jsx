@@ -59,7 +59,7 @@ const Main_card = ({robot}) => {
             <div className='log-container'>
 
                 {filteredLogs?.length > 0 ? (
-                    filteredLogs.map((log, index) => (
+                    filteredLogs.slice().reverse().map((log, index) => (
                         <div key={index} className='log-item'>
                             <span className='log-message'>{log.log_m}</span>
                             <span className='log-time'>{log.log_t}</span>

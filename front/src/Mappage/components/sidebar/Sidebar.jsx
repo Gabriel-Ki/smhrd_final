@@ -14,7 +14,7 @@ const Sidebar=({clickRobot})=>{
 
 
   const getStatusClass=(status)=>{
-    if(status==='이동 중') return "delivery";
+    if(status==='이동중') return "delivery";
     if(status==='대기') return "waiting";
     return "";
   }
