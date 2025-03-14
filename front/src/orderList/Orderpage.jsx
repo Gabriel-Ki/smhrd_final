@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import OrderSide from './components/sidebar/Ordersidebar'
 import OrderList from './components/list/OrderList'
+import './orderpage.css'
 
 const Orderpage = () => {
 
   const [orders,setOrders]=useState([]);
+  const [selectedOrder,setSelectedOrder]=useState();
 
   useEffect(()=>{
     const axiosOrder=async ()=>{
@@ -17,26 +19,44 @@ const Orderpage = () => {
       }
     }
     axiosOrder();
-
     const interOrder=setInterval(axiosOrder,10000);
-
     return ()=>clearInterval(interOrder);
   },[])
 
-  console.log(orders);
-
-  const [selectOrder,setSelectOrder]=useState(null);
-
   const onOrderClick=(order)=>{
-    setSelectOrder(order)
+    console.log("클릭된 주문", order)
+    setSelectedOrder(order);
   }
+
+  // console.log(selectedOrder);
+  // useEffect(()=>{
+  //   if(selectOrder){
+  //     const orderclick=orders.find(order=>order.id===selectOrder);
+  //     setTouch(orderclick);
+  //   }
+  // },[selectOrder]);
 
 
     
   return (
-    <div>
-      <OrderList orders={orders} onSelectOrder={setSelectOrder}/>
-      <OrderSide onClick={setSelectOrder} orders={orders}/>
+    <div className='orderpage'>
+      <div className='orderpage-header'> 
+        팀장선
+      </div>
+      <div className='orderpage-container'>
+
+      
+      <div className='orderpage-box'>
+        <div  className='orderpage-list'>
+        <OrderList orders={orders} onSelectOrder={onOrderClick}/>
+        </div>
+        <div  className='orderpage-sidebar'>
+        <OrderSide selectedOrder={selectedOrder} orders={orders}/>
+        </div>
+        </div>
+        
+      </div>
+      
       
     </div>
   )

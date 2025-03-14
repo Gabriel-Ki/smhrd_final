@@ -7,6 +7,7 @@ import Maindash from './Main/maindash/Maindash';
 import DeliveryPage from './Mappage/DeliveryPage';
 import OrderItem from './orderList/components/order/OrderItem';
 import Orderpage from './orderList/Orderpage'
+import OrderSidebar from './orderList/components/sidebar/Ordersidebar'
 
 
 function App() {
@@ -18,7 +19,9 @@ function App() {
       {/* <Maindash/> */}
       {/* <OrderItem/> */}
       <Orderpage/>
+      {/* <OrderSidebar/> */}
       {/* <DeliveryPage></DeliveryPage> */}
+
     </div>
   );
 }

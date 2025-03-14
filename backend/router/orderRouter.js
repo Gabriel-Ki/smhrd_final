@@ -4,26 +4,28 @@ const pool = require('../db'); // DB 연결
 
 
 router.get('/',async(req,res)=>{
+
     const sql=`SELECT 
-    p.order_id, 
-    p.robot_id, 
-    p.destination, 
-    p.status, 
-    p.order_time, 
-    p.total_amount,
-    GROUP_CONCAT(
-        CASE 
-            WHEN pi.quantity > 1 
-            THEN CONCAT(pi.item_name, ' x', pi.quantity, ' ', FORMAT(pi.quantity * pi.price, 0), '원')
-            ELSE CONCAT(pi.item_name, ' ', FORMAT(pi.price, 0), '원')
-        END
-        SEPARATOR ', '
-    ) AS items
-FROM pickup AS p
-INNER JOIN pickup_items AS pi 
-    ON p.order_id = pi.order_id
-GROUP BY p.order_id`
-    // const sql2=`select * from pickup_items`
+    o.orders_idx, 
+    r.robots_idx, 
+    rs.status AS delivery_status, 
+    o.destination, 
+    GROUP_CONCAT(CONCAT(oi.menu_name, 'x', oi.quantity) SEPARATOR ', ') AS order_items, 
+    o.total_price
+FROM orders o
+LEFT JOIN orders_items oi ON o.orders_idx = oi.orders_idx
+LEFT JOIN robots r ON o.orders_idx = r.orders_idx
+LEFT JOIN robots_status_logs rs ON r.robots_idx = rs.robots_idx 
+    AND rs.updated_at = (
+        SELECT MAX(updated_at) 
+        FROM robots_status_logs 
+        WHERE robots_idx = r.robots_idx
+    )
+GROUP BY o.orders_idx, r.robots_idx, rs.status, o.destination, o.total_price
+ORDER BY o.orders_idx DESC
+
+`
+
     try{
         const [results]= await pool.query(sql);
         res.status(200).json(results)
