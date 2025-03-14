@@ -3,7 +3,7 @@ import KakaoMap from './components/map/Kakaomap';
 import Sidebar from './components/sidebar/Sidebar';
 import '../Mappage/Deliverypage.css';
 import axios from 'axios';
-
+// import '../layout/Layout.css'
 
 const DeliveryPage = () => {
 
