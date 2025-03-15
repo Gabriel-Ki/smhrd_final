@@ -1,45 +1,52 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
-const RobotMarkers = ({ map, robots, onMarkerClick}) => {
+function RobotMarkers({ map, onMarkerClick, robots }) {
+  const robotMarkersRef = useRef([]);
 
-  // console.log(onMarkerClick);
   useEffect(() => {
     if (!map || !robots) return;
 
-    const imageSrc="/img/robot1.png"
+    console.log(robots);
 
-    const imageSize=new window.kakao.maps.Size(30,30)
+    // 기존 마커 제거
+    robotMarkersRef.current.forEach(marker => marker.setMap(null));
+    robotMarkersRef.current = [];
 
-    const imageOption={offset : new window.kakao.maps.Point(25,25)};
-
-    const markerImage=new window.kakao.maps.MarkerImage(imageSrc, imageSize,imageOption);
-
-
-
-    // console.log(robots);
-    
-
-
+    // 새로운 로봇 마커 생성
     robots.forEach(robot => {
       const marker = new window.kakao.maps.Marker({
-        position: new window.kakao.maps.LatLng(robot.latitude, robot.longitude),
+        position: new window.kakao.maps.LatLng(robot.robot_x, robot.robot_y),
+        image: new window.kakao.maps.MarkerImage(
+          "/img/robot1.png",
+          new window.kakao.maps.Size(40, 40)
+        ),
         map: map,
-        // image: markerImage
+        // zIndex:9999
       });
-      
-      
+      console.log(robot);
 
 
+      // 마커 클릭 이벤트 (필요하다면)
+      if (onMarkerClick) {
+        window.kakao.maps.event.addListener(marker, "click", () => {
+          onMarkerClick(robot.robots_idx);
+          // console.log(robot)
+        });
+      }
 
-      // 마커 클릭 이벤트 추가
-      window.kakao.maps.event.addListener(marker, "click", () => {
-        onMarkerClick(robot.robot_id);
-      });
+      robotMarkersRef.current.push(marker);
     });
-  }, [map, robots]);
 
-  return null;
-};
+    console.log("🚀 로봇 마커 생성 완료:", robotMarkersRef.current.length);
+
+    // cleanup 함수
+    return () => {
+      robotMarkersRef.current.forEach(marker => marker.setMap(null));
+      robotMarkersRef.current = [];
+    };
+  }, [map, robots, onMarkerClick]);
+
+  return null; // 화면에 직접 표시할 요소는 없고, 마커만 지도 위에 띄움
+}
 
 export default RobotMarkers;
-  

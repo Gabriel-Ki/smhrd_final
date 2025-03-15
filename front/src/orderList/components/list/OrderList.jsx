@@ -10,7 +10,7 @@ const OrderList = ({ orders, onSelectOrder }) => {
   return (
     <div className="orderlist-wrapper" >
       {orders.map((order) => (
-        <OrderItem key={order.id} order={order} onSelect={onSelectOrder} />
+        <OrderItem key={order.orders_idx} order={order} onSelect={onSelectOrder} />
       ))}
     </div>
   );

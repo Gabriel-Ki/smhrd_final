@@ -2,33 +2,58 @@
 
 /* 전체 사이드바 컨테이너 */
 .ordersidebar {
-    width: 100%;
+    /* width: 100%;
     padding: 16px;
     border-radius: 8px;
+    box-sizing: border-box; */
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    display: flex;
+    /* flex: 1; */
+    flex-direction: column;
     box-sizing: border-box;
   }
   
   /* 헤더 섹션 */
   .ordersidebar-header {
+    /* display: flex;
+    align-items: center;
+    margin-bottom: 15px; */
     display: flex;
     align-items: center;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly ;
   }
   
   .ordersidebar-header img {
+    /* margin-right: 10px; */
+    width: 24px;
+    height: 24px;
     margin-right: 10px;
   }
   
   .ordersidebar-header-text {
-    font-size: 1.5rem;
+    /* font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0; */
+    font-size: 20px;
     font-weight: bold;
     margin: 0;
   }
   
   /* 주문 정보 섹션 */
   .ordersidebar-orderinfo {
+    /* justify-content: space-between;
+    margin-bottom: 15px; */
+    font-size: 14px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
     justify-content: space-between;
-    margin-bottom: 15px;
+    align-items: center;
   }
   
   .ordersidebar-orderinfo p,
@@ -38,37 +63,68 @@
   
   /* 배달 상태 섹션 */
   .ordersidebar-delivery-status {
-    margin-bottom: 15px;
+    /* margin-bottom: 15px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
   }
   
   .ordersidebar-status-group {
+    /* display: flex;
+    align-items: center; */
     display: flex;
     align-items: center;
+    flex-direction: row;
   }
   
   .ordersidebar-status-icon {
-    width: 20px;
+    /* width: 20px;
     height: 20px;
     border-radius: 50%;
     margin-right: 8px;
-    background-color: #ccc;  /* 기본 아이콘 색상 */
+    background-color: #ccc; */
+    width: 10px;
+    height: 10px;
+    background-color: #28a745; /* 기본 초록색 */
+    border-radius: 50%;
+    margin-right: 8px;
   }
   
   /* 상태별 색상 */
   .ordersidebar-status-icon.delivery {
-    background-color: #4caf50;
+    /* background-color: #4caf50; */
+    background-color: #28a745;
   }
+
+/*   
+  배차 대기 중
+  가게 도착
+  목적지 이동 중
+  목적지 도착
+  대기 중
+  회차 중 */
   .ordersidebar-status-icon.waiting {
-    background-color: #ff9800;
+    /* background-color: #ff9800; */
+    background-color: #cccccc;
   }
   
   .ordersidebar-status-text {
-    font-size: 1rem;
+    /* font-size: 1rem; */
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
   }
   
   /* 도착지 정보 */
   .ordersidebar-destination {
-    margin-bottom: 15px;
+    /* margin-bottom: 15px; */
+    font-size: 14px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+    text-align: left;
   }
   
   /* 주문 내역 섹션 */
@@ -79,6 +135,7 @@
   .ordersidebar-order-list {
     font-weight: bold;
     margin-bottom: 5px;
+    text-align: left;
   }
   
   .ordersidebar-order-list-ul {
@@ -98,11 +155,12 @@
     font-size: 0.9rem;
     text-align: left;
     flex: 1;
+    color: black;
   }
   
   .ordersidebar-order-price {
     font-size: 0.9rem;
-    color: #888;
+    color: black;
     text-align: right;
     flex: 0.3;
   }
