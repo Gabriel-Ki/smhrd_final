@@ -13,7 +13,6 @@ import OrderSidebar from './orderList/components/sidebar/Ordersidebar'
 function App() {
   return (
     <div className="App">
-      {/* <MainDash/> */}
       {/* <Main_card/> */}
       {/* <Grid/> */}
       {/* <Maindash/> */}

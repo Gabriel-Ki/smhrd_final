@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
-// import '../sidebar/OrderSidebar.css'
-// import '../sidebar/OrderSide.css'
-import '../sidebar/sidebarex.css'
+import '../sidebar/OrderSidebar.css'
 
 const Ordersidebar = ({orders,selectedOrder}) => {
 
@@ -32,8 +30,8 @@ const Ordersidebar = ({orders,selectedOrder}) => {
     console.log(orders);
 
     const getStatusClass=(status)=>{
-      if(status==='이동중') return "delivery";
-      if(status==='대기') return "waiting";
+      if(status==='가게 도착' || status==='목적지 이동 중' || status==='목적지 도착') return "delivery";
+      if(status==='배차 대기 중' || status==='대기 중' || status==='회차 중' ) return "waiting";
       return "";
     }
 
@@ -47,6 +45,7 @@ const Ordersidebar = ({orders,selectedOrder}) => {
         
       )
     }
+
 
     const robotOrders = selectedOrder
     ? orders.filter(order => order.robots_idx === selectedOrder)
@@ -77,14 +76,14 @@ const Ordersidebar = ({orders,selectedOrder}) => {
           </div>
           {/* 주문 번호, 매장 */}
           <div className='ordersidebar-orderinfo'>
-            <p>주문 번호: {robotOrders[0].orders_idx}</p> {/* api로 주문 번호 받아오기  */}
+            <p>주문 번호: 10100{robotOrders[0].orders_idx}</p> {/* api로 주문 번호 받아오기  */}
             <h3>매장 : 신락원</h3> {/* api로 매장 이름 받아오기*/}
             {/*  */}
           </div>
           {/* 배달 상태 */}
           <div className="ordersidebar-delivery-status">
             <div className="ordersidebar-status-group">
-              <div className={`ordersidebar-status-icon ${getStatusClass(robotOrders[0].delivery_statusstatus)}`} />
+              <div className={`ordersidebar-status-icon ${getStatusClass(robotOrders[0].delivery_status)}`} />
               <span className="ordersidebar-status-text">{robotOrders[0].delivery_status}</span>
             </div>
           </div>
@@ -115,7 +114,7 @@ const Ordersidebar = ({orders,selectedOrder}) => {
           <hr />
           <div className="ordersidebar-order-total">
             <p >총액 </p> 
-            <p>{robotOrders[0].total_amount}원</p>
+            <p>{robotOrders[0].total_price}원</p>
           </div>
         </div>
 

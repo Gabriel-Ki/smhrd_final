@@ -1,7 +1,7 @@
 .orderitem-card{
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: stretch;
 
     border: 1px solid #000;
     border-radius: 8px;
@@ -24,6 +24,13 @@
 .orderitem-info{
     margin-right: 20px;
     font-size: 0.95rem;
+}
+
+.orderitem-time{
+    font-size: 24px;
+    font-weight: bold;
+    margin-right: 50px;
+    margin-left: 50px;
 }
 
 .orderitem-info:last-child{

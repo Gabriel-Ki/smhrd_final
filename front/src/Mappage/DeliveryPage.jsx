@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import KakaoMap from './components/map/Kakaomap';
-import Sidebar from './components/sidebar/Sidebar';
+import MapSidebar from './components/sidebar/MapSidebar';
 import '../Mappage/Deliverypage.css';
 import axios from 'axios';
 // import '../layout/Layout.css'
@@ -19,9 +19,6 @@ const DeliveryPage = () => {
       try{
         const response= await axios.get('http://localhost:5000/robot'); // 경로 수정하고 로봇 6개의 정보를 여기로 출력
         setRobots(response.data);
-        // console.log(response.data);
-        // console.log(response);
-        // console.log(robots);
         
       } catch(error){
         console.error('로봇 정보를 가져오는 중 오류 :', error);
@@ -35,27 +32,26 @@ const DeliveryPage = () => {
 
     },[]);
 
+    // console.log(robots);
+
 
     const onMarkerClick=(robot)=>{
-      console.log(robot, '마커 클릭');
+      // console.log(robot, '마커 클릭');
       setSelectRobot(robot);
       
     }
 
-    useEffect(()=>{
-      if(selectRobot){
-        console.log('선택된 로봇', selectRobot);
-        // setClickRobot(robots.find(robot=>robot.robot_name ===selectRobot));
-        const clicked=robots.find(robot=>robot.robot_id ===selectRobot);
-        setClickRobot(clicked);
-      }
-    },[selectRobot]);
+    const NaviRobot=robots.find(robot=> robot.robots_idx === selectRobot)
+    // console.log(NaviRobot)
+
+  
 
     // console.log('deliverypage',onMarkerClick);
 
     
     // console.log(clickRobot);
     
+    // console.log(selectRobot);
 
 
   return (
@@ -66,11 +62,11 @@ const DeliveryPage = () => {
         <div className='delivery-box'>
           {/* 지도 */}
           <div className='delivery-map'>
-            <KakaoMap robots={robots} onMarkerClick={onMarkerClick} clickRobot={clickRobot}/>
+            <KakaoMap robots={robots} onMarkerClick={onMarkerClick} clickRobot={NaviRobot}/>
           </div>
           {/* 사이드바 */}
           <div className='delivery-sidebar'>
-            <Sidebar clickRobot={clickRobot}/>
+            <MapSidebar selectRobot={selectRobot} robots={robots}/>
           </div>
         </div>
       </div>
