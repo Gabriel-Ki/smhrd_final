@@ -15,9 +15,9 @@ function App() {
     <div className="App">
       {/* <Main_card/> */}
       {/* <Grid/> */}
-      {/* <Maindash/> */}
+      <Maindash/>
       {/* <OrderItem/> */}
-      <Orderpage/>
+      {/* <Orderpage/> */}
       {/* <OrderSidebar/> */}
       {/* <DeliveryPage></DeliveryPage> */}
 

@@ -10,9 +10,12 @@ router.get('/',async(req,res)=>{
     r.robots_idx, 
     rs.status AS delivery_status, 
     o.destination, 
-    GROUP_CONCAT(CONCAT(oi.menu_name, 'x', oi.quantity, ' ', oi.unit_price * oi.quantity, '원') SEPARATOR ', ') AS order_items,
-    o.total_price,
-	DATE_FORMAT(o.created_at, '%H:%i') AS order_time
+    GROUP_CONCAT(CONCAT
+    (oi.menu_name, 'x', oi.quantity, ' ', 
+    oi.unit_price * oi.quantity, '원') 
+    SEPARATOR ', ') AS order_items, 
+    o.total_price
+>>>>>>> b6022e3 (프론트 백엔드 수정 반영)
 FROM orders o
 LEFT JOIN orders_items oi ON o.orders_idx = oi.orders_idx
 LEFT JOIN robots r ON o.orders_idx = r.orders_idx

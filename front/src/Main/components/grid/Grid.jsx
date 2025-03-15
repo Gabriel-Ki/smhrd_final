@@ -2,17 +2,12 @@ import React, { useState } from 'react'
 import Maincard from '../card/Main_card'
 import './grid.css'
 
-const Grid = ({mainrobots}) => {
-
-  // const [robots, setRobots]=useState
-
-  console.log(mainrobots);
-
+const Grid = ({gridmain}) => {
 
   return (
     <div className='card-grid'>
-        {mainrobots.map((mainrobot)=>(
-            <Maincard key={mainrobot.id} robot={mainrobot}/>
+        {gridmain.map((gridmain)=>(
+            <Maincard key={gridmain.robots_idx} gridmain={gridmain}/>
         ))}
     </div>
   )
