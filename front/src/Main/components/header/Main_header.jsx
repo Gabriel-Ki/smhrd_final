@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 const Main_dash = ({robotsStatus}) => {
   // console.log("Main_header.jsx 의 robotsStatus 데이터 :", robotsStatus);
 
-  const navigate = useNavigate();
+  
 
   const getStatusClass = (status) => {
     switch(status){
@@ -20,14 +20,7 @@ const Main_dash = ({robotsStatus}) => {
 
   return (
     <div className='head-container'>
-      <div className='header-content'>
-        <h3 className='header-title'>Delivus</h3>
-        <div className='header-buttons'>
-          <button onClick={() => navigate('/delivery')}>지도</button>
-          <button onClick={() => navigate('/')}>주문목록</button>
-          <button onClick={() => navigate('/maindash')}>대시보드</button>
-        </div>
-      </div>
+      
         <div className='robot-status'>
           <span className='allrobot'>전체 로봇 {robotsStatus.total}</span> {/* 여기서 숫자api로 값 가져와서 넣은 곳 */}
           <div className='fliter'>

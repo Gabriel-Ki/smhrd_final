@@ -273,3 +273,32 @@
   transform: translateX(-3px);
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
+
+.order-completeBtn{
+  background-color: white;
+  height: 50px;
+  width: 100px;
+  border-radius: 30px;
+  border: 2px solid black;
+  cursor: pointer;
+}
+.order-completeBtn:hover{
+  /* background-color: green; */
+  border: 2px solid blue;
+  transform: translateX(-3px);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.order-deliverBtn{
+  background-color: white;
+  height: 50px;
+  width: 100px;
+  border-radius: 30px;
+  border: 2px solid black;
+  cursor: pointer;
+}
+.order-deliverBtn:hover{
+  /* background-color: green; */
+  border: 2px solid blue;
+  transform: translateX(-3px);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}

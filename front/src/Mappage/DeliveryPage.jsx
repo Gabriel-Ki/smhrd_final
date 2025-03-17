@@ -4,6 +4,7 @@ import MapSidebar from './components/sidebar/MapSidebar';
 import '../Mappage/Deliverypage.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import '../header.css'
 // import '../layout/Layout.css'
 
 const DeliveryPage = () => {
@@ -64,9 +65,9 @@ const DeliveryPage = () => {
 
   return (
     <div className='delivery-page'>
-      <div className='delivery-header'>
+      <div className='common-header'>
         Delivus
-        <div className='delivery-buttons'>
+        <div className='common-header-buttons'>
           <button onClick={() => navigate('/maindash')}>대시보드</button>
           <button onClick={() => navigate('/')}>주문 내역</button>
         </div>
