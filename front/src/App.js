@@ -13,13 +13,9 @@ import OrderSidebar from './orderList/components/sidebar/Ordersidebar'
 function App() {
   return (
     <div className="App">
-      {/* <Main_card/> */}
-      {/* <Grid/> */}
       {/* <Maindash/> */}
-      {/* <OrderItem/> */}
-      {/* <Orderpage/> */}
-      {/* <OrderSidebar/> */}
-      <DeliveryPage></DeliveryPage>
+      <Orderpage/>
+      {/* <DeliveryPage></DeliveryPage> */}
 
     </div>
   );

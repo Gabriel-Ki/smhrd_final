@@ -1,38 +1,111 @@
-.orderitem-card{
+.orderitem-card {
     display: flex;
     align-items: center;
-    justify-content: stretch;
-
-    border: 1px solid #000;
+    justify-content: space-between;
+    border: 1px solid #ddd;
     border-radius: 8px;
-
-    height: 78.5px;
-
-    padding: 10px;
-    margin-bottom: 20px;
+    height: 100px;
+    padding: 15px;
+    margin-bottom: 15px;
     background-color: #fff;
-
-    /* box-shadow: 2px 2px 5px rgba(0,0,0,0.1); */
     cursor: pointer;
     transition: transform 0.2s;
-}
-
-.orderitem-card:hover{
-    transform: translate(-3px);
-}
-
-.orderitem-info{
-    margin-right: 20px;
-    font-size: 0.95rem;
-}
-
-.orderitem-time{
+  }
+  
+  .orderitem-card:hover {
+    transform: translateX(-3px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  
+  .orderitem-left {
+    width: 80px;
+    text-align: center;
+  }
+  
+  .orderitem-time {
     font-size: 24px;
     font-weight: bold;
-    margin-right: 50px;
-    margin-left: 50px;
-}
-
-.orderitem-info:last-child{
-    margin-right: 0;
-}
+  }
+  
+  .orderitem-content {
+    flex-grow: 1;
+    padding: 0 15px;
+  }
+  
+  .orderitem-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+  }
+  
+  .orderitem-id {
+    font-weight: bold;
+  }
+  
+  .orderitem-payment {
+    color: #777;
+    font-size: 0.9em;
+  }
+  
+  .orderitem-details {
+    margin-bottom: 5px;
+  }
+  
+  .orderitem-item {
+    margin-right: 10px;
+    font-size: 0.9em;
+  }
+  
+  .orderitem-address {
+    font-size: 0.9em;
+    color: #555;
+  }
+  
+  .orderitem-right {
+    width: 120px;
+    text-align: center;
+  }
+  
+  .orderitem-status {
+    margin-bottom: 10px;
+  }
+  
+  .status-label {
+    color: #0088cc;
+    font-size: 0.9em;
+    cursor: pointer;
+  }
+  
+  .orderitem-eta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .eta-time {
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-bottom: 5px;
+  }
+  
+  .eta-status {
+    font-size: 0.8em;
+    color: #666;
+  }
+  
+  /* 상태별 색상 */
+  .orderitem-card.waiting {
+    border-left: 5px solid red;
+  }
+  
+  .orderitem-card.cooking {
+    border-left: 5px solid #fd7e14;
+  }
+  
+  .orderitem-card.delivering {
+    border-left: 5px solid #0088cc;
+  }
+  
+  .orderitem-card.completed {
+    border-left: 5px solid #28a745;
+  }
