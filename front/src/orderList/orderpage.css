@@ -25,7 +25,7 @@
     align-items: center;
     margin-bottom: 10px; */
     position: relative;
-    width: 1680px;
+    width: 70%;
     height: 60px;
     padding: 15px;
     font-size: 24px;
@@ -34,6 +34,7 @@
     padding-left: 180px;
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     margin-top: 10px;
 }
 
@@ -53,6 +54,34 @@
     height: 2px;
     background-color: black;
 }
+
+.orderpage-buttons {
+    display: flex;
+    gap: 200px;
+}
+.orderpage-buttons button {
+    flex: none;
+    width: 200px;
+    height: 40px;  
+    padding: 8px 15px;
+    font-size: 14px;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+
+}
+.orderpage-buttons button:hover {
+    background-color: #0056b3;
+}
+
+/* 버튼 호버 효과 */
+.orderpage-buttons button:hover {
+    opacity: 0.8;
+}
+
 
 .orderpage-container{
     width: 90%;
