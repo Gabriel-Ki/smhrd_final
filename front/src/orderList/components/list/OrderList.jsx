@@ -7,10 +7,16 @@ const OrderList = ({ orders, onSelectOrder }) => {
   console.log(onSelectOrder);
   console.log(orders);
 
+  const sortedOrders = [...orders].sort((a, b) => {
+    if (a.order_status === "조리중" && b.order_status !== "조리중") return -1;
+    if (a.order_status !== "조리중" && b.order_status === "조리중") return 1;
+    return b.orders_idx - a.orders_idx;
+  });
+
   return (
     <div className="orderlist-wrapper" >
-      {orders.map((order) => (
-        <OrderItem key={order.orders_idx} order={order} onSelect={onSelectOrder} />
+      {sortedOrders.map((order) => (
+        <OrderItem key={order.orders_idx}   order={order} onSelect={(id, status) => onSelectOrder(id, status)} />
       ))}
     </div>
   );

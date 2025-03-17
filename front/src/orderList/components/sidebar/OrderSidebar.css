@@ -231,3 +231,45 @@
     padding: 40px 0;
   }
   
+
+  .acceptorder-container{
+    width: 100%;
+    align-content: center;
+    height: 70%;
+  }
+
+  .acceptorder-btnContent{
+    display: flex;
+    justify-content: space-around;
+  }
+
+.order-cancelBtn{
+  background-color:white;
+  height: 50px;
+  width: 100px;
+  border-radius: 30px;
+  border: 2px solid black;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.order-cancelBtn:hover{
+  /* background-color: red; */
+  border: 2px solid red;
+  transform: translateX(-3px);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.order-acceptBtn{
+  background-color: white;
+  height: 50px;
+  width: 100px;
+  border-radius: 30px;
+  border: 2px solid black;
+  cursor: pointer;
+}
+
+.order-acceptBtn:hover{
+  /* background-color: green; */
+  border: 2px solid blue;
+  transform: translateX(-3px);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}

@@ -6,7 +6,8 @@ import './orderpage.css'
 
 const Orderpage = () => {
   const [orders, setOrders] = useState([]);
-  const [selectedOrder, setSelectedOrder] = useState();
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [selectedOrderStatus,setSelectedOrderStatus]=useState("")
   const [activeTab, setActiveTab] = useState('접수대기'); // 기본 탭을 '접수대기'로 설정
 
   useEffect(() => {
@@ -19,13 +20,14 @@ const Orderpage = () => {
       }
     }
     axiosOrder();
-    const interOrder = setInterval(axiosOrder, 10000);
+    const interOrder = setInterval(axiosOrder, 180000);
     return () => clearInterval(interOrder);
   }, [])
 
-  const onOrderClick = (order) => {
-    console.log("클릭된 주문", order)
-    setSelectedOrder(order);
+  const onOrderClick = (orderId,status) => {
+    console.log("클릭된 주문", orderId,status);
+    setSelectedOrder(orderId);
+    setSelectedOrderStatus(status);
   }
 
   // 현재 탭에 해당하는 주문만 필터링
@@ -39,7 +41,7 @@ const Orderpage = () => {
   // 각 상태별 주문 수 계산
   const waitingCount = orders.filter(order => order.order_status === '접수대기').length;
   const processingCount = orders.filter(order => order.order_status === '조리중' || order.order_status === '배달중').length;
-  const totalCount = orders.length;
+  const totalCount = orders.filter(order => order.order_status ==='배달완료').length;
 
   return (
     <div className='orderpage'>
@@ -47,27 +49,6 @@ const Orderpage = () => {
         팀장선
       </div>
       <div className='orderpage-container'>
-        {/* <div className='orderpage-tabs'>
-          <button 
-            className={`orderpage-tab ${activeTab === '접수대기' ? 'active' : ''}`}
-            onClick={() => setActiveTab('접수대기')}
-          >
-            주문접수
-          </button>
-          <button 
-            className={`orderpage-tab ${activeTab === '배달관리' ? 'active' : ''}`}
-            onClick={() => setActiveTab('배달관리')}
-          >
-            처리 중
-          </button>
-          <button 
-            className={`orderpage-tab ${activeTab === '배달상황' ? 'active' : ''}`}
-            onClick={() => setActiveTab('배달상황')}
-          >
-            배달완료
-          </button>
-        </div> */}
-        
         <div className='orderpage-box'>
           <div className='orderpage-status-counts'>
             <div className='status-count-item' onClick={()=>setActiveTab('접수대기')}>
@@ -87,7 +68,7 @@ const Orderpage = () => {
             <OrderList orders={filteredOrders} onSelectOrder={onOrderClick} />
           </div>
           <div className='orderpage-sidebar'>
-            <OrderSide selectedOrder={selectedOrder} orders={orders} />
+            <OrderSide selectedOrder={selectedOrder} orders={orders} orderStatus={selectedOrderStatus} />
           </div>
         </div>
       </div>
