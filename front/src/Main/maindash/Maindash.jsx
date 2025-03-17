@@ -25,10 +25,10 @@ const Maindash = () => {
 
     axiosMain();
 
-    const interterm=setInterval(axiosMain,180000);
+  // const interterm=setInterval(axiosMain,30000);
 
 
-  return ()=>clearInterval(interterm);
+  // return ()=>clearInterval(interterm);
   },[]);
 
   return (
