@@ -9,10 +9,10 @@ const DeliveryPage = () => {
 
   const [robots,setRobots]=useState([]) // 로봇 정보 담고
   const [selectRobot,setSelectRobot]=useState(null); // 지도에서 클릭한 로봇의 id
-  const [clickRobot,setClickRobot]=useState(); 
+  // const [clickRobot,setClickRobot]=useState(); 
 
-  const [sideRobots,setSideRobots]=useState([]); //sidebar에 넘길 값들만 뽑은
-  const [mapRobots,setMapRobots]=useState([]); // map에 넘길 값들만 뽑은 
+  // const [sideRobots,setSideRobots]=useState([]); //sidebar에 넘길 값들만 뽑은
+  // const [mapRobots,setMapRobots]=useState([]); // map에 넘길 값들만 뽑은 
 
   useEffect(()=>{
     const axiosRobot=async ()=>{
@@ -26,7 +26,7 @@ const DeliveryPage = () => {
     }
     axiosRobot();
     
-    const intervaild=setInterval(axiosRobot,10000); // 10초 마다 업데이트 하겠다
+    const intervaild=setInterval(axiosRobot,180000); // 10초 마다 업데이트 하겠다
 
     return ()=>clearInterval(intervaild);
 
@@ -36,8 +36,14 @@ const DeliveryPage = () => {
 
 
     const onMarkerClick=(robot)=>{
+
+      if (selectRobot===robot){
+        setSelectRobot(null)
+      }else{
+        setSelectRobot(robot);
+      }
       // console.log(robot, '마커 클릭');
-      setSelectRobot(robot);
+      
       
     }
 
