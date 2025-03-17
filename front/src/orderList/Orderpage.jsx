@@ -19,7 +19,7 @@ const Orderpage = () => {
       }
     }
     axiosOrder();
-    const interOrder=setInterval(axiosOrder,10000);
+    const interOrder=setInterval(axiosOrder,180000);
     return ()=>clearInterval(interOrder);
   },[])
 

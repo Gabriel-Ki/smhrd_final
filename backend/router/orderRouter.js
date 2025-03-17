@@ -15,18 +15,17 @@ router.get('/',async(req,res)=>{
     oi.unit_price * oi.quantity, '원') 
     SEPARATOR ', ') AS order_items, 
     o.total_price
->>>>>>> b6022e3 (프론트 백엔드 수정 반영)
-FROM orders o
-LEFT JOIN orders_items oi ON o.orders_idx = oi.orders_idx
-LEFT JOIN robots r ON o.orders_idx = r.orders_idx
-LEFT JOIN robots_status_logs rs ON r.robots_idx = rs.robots_idx 
+    FROM orders o
+    LEFT JOIN orders_items oi ON o.orders_idx = oi.orders_idx
+    LEFT JOIN robots r ON o.orders_idx = r.orders_idx
+    LEFT JOIN robots_status_logs rs ON r.robots_idx = rs.robots_idx 
     AND rs.updated_at = (
         SELECT MAX(updated_at) 
         FROM robots_status_logs 
         WHERE robots_idx = r.robots_idx
     )
-GROUP BY o.orders_idx, r.robots_idx, rs.status, o.destination, o.total_price
-ORDER BY o.orders_idx DESC
+    GROUP BY o.orders_idx, r.robots_idx, rs.status, o.destination, o.total_price
+    ORDER BY o.orders_idx DESC
 
 `
 

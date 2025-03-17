@@ -15,11 +15,11 @@ function App() {
     <div className="App">
       {/* <Main_card/> */}
       {/* <Grid/> */}
-      <Maindash/>
+      {/* <Maindash/> */}
       {/* <OrderItem/> */}
       {/* <Orderpage/> */}
       {/* <OrderSidebar/> */}
-      {/* <DeliveryPage></DeliveryPage> */}
+      <DeliveryPage></DeliveryPage>
 
     </div>
   );
