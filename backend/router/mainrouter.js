@@ -46,34 +46,31 @@ ORDER BY r.robots_idx, r.orders_idx, rs.updated_at DESC;`
 
 router.get('/robots/status', async(req,res)=>{
     const sql2= `WITH LatestStatus AS (
-        SELECT rsl.robots_idx, rsl.status
-        FROM robots_status_logs rsl
-        WHERE rsl.robots_status_logs_idx = (
-            SELECT rsl2.robots_status_logs_idx
-            FROM robots_status_logs rsl2
-            WHERE rsl2.robots_idx = rsl.robots_idx
-            ORDER BY rsl2.updated_at DESC, rsl2.robots_status_logs_idx DESC
-            LIMIT 1
-        )
-    ),
-    StatusList AS (
-        SELECT '대기 중' AS status UNION ALL
-        SELECT '배차 대기 중' UNION ALL
-        SELECT '가게 이동 중' UNION ALL
-        SELECT '가게 도착' UNION ALL
-        SELECT '목적지 이동 중' UNION ALL
-        SELECT '엘리베이터 탑승 중' UNION ALL
-        SELECT '목적지 도착' UNION ALL
-        SELECT '회차 중'
+    SELECT rsl.robots_idx, rsl.status
+    FROM robots_status_logs rsl
+    WHERE rsl.robots_status_logs_idx = (
+        SELECT rsl2.robots_status_logs_idx
+        FROM robots_status_logs rsl2
+        WHERE rsl2.robots_idx = rsl.robots_idx
+        ORDER BY rsl2.updated_at DESC, rsl2.robots_status_logs_idx DESC
+        LIMIT 1
     )
-    SELECT sl.status, COALESCE(COUNT(ls.robots_idx), 0) AS count
-    FROM StatusList sl
-    LEFT JOIN (
-        SELECT ls.status, r.robots_idx
-        FROM robots r
-        JOIN LatestStatus ls ON r.robots_idx = ls.robots_idx
-    ) ls ON sl.status = ls.status
-    GROUP BY sl.status;`
+),
+StatusList AS (
+    SELECT '대기 중' AS status UNION ALL
+    SELECT '가게 이동 중' UNION ALL
+    SELECT '픽업 대기' UNION ALL
+    SELECT '목적지 이동 중' UNION ALL
+    SELECT '배달 완료'
+)
+SELECT sl.status, COALESCE(COUNT(ls.robots_idx), 0) AS count
+FROM StatusList sl
+LEFT JOIN (
+    SELECT ls.status, r.robots_idx
+    FROM robots r
+    JOIN LatestStatus ls ON r.robots_idx = ls.robots_idx
+) ls ON sl.status = ls.status
+GROUP BY sl.status;`
     try{
         const [results] = await pool.query(sql2);
 
