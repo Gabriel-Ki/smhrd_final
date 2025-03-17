@@ -11,28 +11,25 @@ const Maindash = () => {
 
   useEffect(()=>{
     const axiosMain = async ()=>{
-      try{
+      try {
         const response = await axios.get('http://localhost:5000/grid_maincard');
         setGridMainStatus(response.data.gridmain);
+
         const response2 = await axios.get('http://localhost:5000/robots/status');
         setRobotsStatus(response2.data);
-      }catch(error){
-        console.error('api 통신 오류:',error);
+        
+      } catch (error) {
+        console.error('API 통신 오류:', error);
       }
-    }
+    };
+
     axiosMain();
 
     const interterm=setInterval(axiosMain,180000);
 
-    return ()=>clearInterval(interterm);
+
+  return ()=>clearInterval(interterm);
   },[]);
-
-  console.log("gridmainStatus : ",gridmainStatus);
-  
-
-
-
-
 
   return (
     <div>
