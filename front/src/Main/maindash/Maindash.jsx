@@ -2,11 +2,15 @@ import React, { useEffect, useState } from 'react'
 import Grid from '../components/grid/Grid'
 import Mainheader from '../components/header/Main_header'
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import '../../header.css'
 
 
 
 const Maindash = () => {
 
+
+  const navigate = useNavigate();
 
   const [gridmainStatus, setGridMainStatus] = useState([]);
   const [robotsStatus,setRobotsStatus]=useState([]);
@@ -35,6 +39,14 @@ const Maindash = () => {
 
   return (
     <div>
+      <div className='maindash-header'>
+        Delivus
+        <div className='common-header-buttons'>
+          <button onClick={() => navigate('/delivery')}>지도</button>
+          <button onClick={() => navigate('/')}>주문목록</button>
+          {/* <button onClick={() => navigate('/maindash')}>대시보드</button> */}
+        </div>
+      </div>
         <Mainheader robotsStatus={robotsStatus}/>
         <Grid gridmain={gridmainStatus}/>
     </div>

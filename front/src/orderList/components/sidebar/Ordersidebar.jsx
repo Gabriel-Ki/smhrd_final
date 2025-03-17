@@ -64,7 +64,7 @@ const Ordersidebar = ({orders,selectedOrder,orderStatus}) => {
       return(
         <div className='acceptorder-container'>
           <h2>주문 번호 : {selectedOrder}</h2>
-          <p>주문을 접수하세요</p>
+          <p>주문 접수 시 로봇 배차 시작</p>
           <div className='acceptorder-btnContent'>
             <button className='order-cancelBtn'>주문 취소</button>
             <button onClick={handleAcceptOrder} className='order-acceptBtn'>주문 접수</button>
@@ -73,6 +73,8 @@ const Ordersidebar = ({orders,selectedOrder,orderStatus}) => {
         </div>
       )
     }
+
+
 
     const handleCooking=async ()=>{
       try{
@@ -83,6 +85,18 @@ const Ordersidebar = ({orders,selectedOrder,orderStatus}) => {
         window.location.reload();
       }catch(err){
         console.error('로봇 픽업 중 오류 :', err)
+      }
+    }
+
+    const handleCompleted=async()=>{
+      try{
+        await axios.post('http://localhost:5000/btn',{
+          orderId:selectedOrder,
+        });
+        alert('배달이 완료되었습니다');
+        window.location.reload();
+      }catch(err){
+        console.error('배달 완료 오류: ',err)
       }
     }
 
@@ -99,9 +113,9 @@ const Ordersidebar = ({orders,selectedOrder,orderStatus}) => {
 
     console.log(itemList);
 
-    const orderStatsusList=["접수 대기","조리 중","배달 중","배달 완료"];
+    const orderStatusList=["접수 대기","조리 중","배달 중","배달 완료"];
 
-    const currentStatus=orderStatsusList.indexOf(robotOrders[0]?.status || "접수 대기");
+    const currentStatus=orderStatusList.indexOf(robotOrders[0]?.status || "접수 대기");
 
 
     
@@ -163,7 +177,12 @@ const Ordersidebar = ({orders,selectedOrder,orderStatus}) => {
 
           <div>
             {orderStatus ==='조리중' ? (
-              <button  onClick={handleCooking}> 배달 시작</button>
+              <button  onClick={handleCooking} className='order-deliverBtn'> 배달 시작</button>
+            ):(
+              <></>
+            )}
+            {orderStatus ==='배달중'?(
+              <button onClick={handleCompleted} className='order-completeBtn'>배달 완료</button>
             ):(
               <></>
             )}

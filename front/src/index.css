@@ -11,3 +11,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* 좌우 스크롤 제거 */
+body, html {
+  overflow-x: hidden; /* 좌우 스크롤 없애기 */
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}

@@ -4,6 +4,7 @@ import OrderSide from './components/sidebar/Ordersidebar'
 import OrderList from './components/list/OrderList'
 import './orderpage.css'
 import { useNavigate } from 'react-router-dom';
+import '../header.css'
 
 const Orderpage = () => {
   const navigate = useNavigate();
@@ -43,16 +44,16 @@ const Orderpage = () => {
   // 각 상태별 주문 수 계산
   const waitingCount = orders.filter(order => order.order_status === '접수대기').length;
   const processingCount = orders.filter(order => order.order_status === '조리중' || order.order_status === '배달중').length;
-  const totalCount = orders.filter(order => order.order_status ==='배달완료').length;
+  const totalCount = orders.filter(order => order.order_status ==='완료').length;
 
   return (
     <div className='orderpage'>
       
-      <div className='orderpage-header'>
+      <div className='common-header'>
         Delivus
-        <div className='orderpage-buttons'>
-          <button className="orderpage-btn1" onClick={() => navigate('/maindash')}>대시보드</button>
-          <button className="orderpage-btn2" onClick={() => navigate('/delivery')}>지도</button>
+        <div className='common-header-buttons'>
+          <button  onClick={() => navigate('/maindash')}>대시보드</button>
+          <button  onClick={() => navigate('/delivery')}>지도</button>
         </div>
       </div>
       
