@@ -4,10 +4,12 @@ import axios from 'axios';
 
 const Main_card = ({gridmain}) => {
 
-    const statusColors={
-        "대기": "gray",
-        "이동중": "green",
-        "회차중" : "yellow",
+    const statusColors = {
+        "대기 중": "red",
+        "가게 이동 중": "orange",
+        "픽업 대기": "orange",
+        "목적지 이동 중": "blue",
+        "배달 완료": "green"
     };
 
     return (
@@ -17,14 +19,13 @@ const Main_card = ({gridmain}) => {
                         <img src="./img/robot.png" alt="robot" width='30px' height='30px'/>
                         <h2> {gridmain.robots_idx}</h2>
                         <div 
-                        className='status-dot'
+                        className='status-dot' 
                         style={{
-                            backgroundColor: statusColors[gridmain.logs[0]?.status] ||"gray", 
+                            backgroundColor: statusColors[gridmain.logs[0]?.status] || "gray",
                             width: 8, 
                             height: 8, 
-                            borderRadius:50 
-                        }}>
-                        </div>
+                            borderRadius: "50%"
+                        }}></div>
                         <h3 className='robot-status'>{gridmain.logs[0]?.status}</h3>
                     </div>
                     

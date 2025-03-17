@@ -3,8 +3,10 @@ import axios from 'axios';
 import OrderSide from './components/sidebar/Ordersidebar'
 import OrderList from './components/list/OrderList'
 import './orderpage.css'
+import { useNavigate } from 'react-router-dom';
 
 const Orderpage = () => {
+  const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [selectedOrderStatus,setSelectedOrderStatus]=useState("")
@@ -45,9 +47,16 @@ const Orderpage = () => {
 
   return (
     <div className='orderpage'>
-      <div className='orderpage-header'> 
-        팀장선
+      
+      <div className='orderpage-header'>
+        Delivus
+        <div className='orderpage-buttons'>
+          <button className="orderpage-btn1" onClick={() => navigate('/maindash')}>대시보드</button>
+          <button className="orderpage-btn2" onClick={() => navigate('/delivery')}>지도</button>
+        </div>
       </div>
+      
+
       <div className='orderpage-container'>
         <div className='orderpage-box'>
           <div className='orderpage-status-counts'>

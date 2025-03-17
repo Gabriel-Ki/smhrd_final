@@ -3,10 +3,12 @@ import KakaoMap from './components/map/Kakaomap';
 import MapSidebar from './components/sidebar/MapSidebar';
 import '../Mappage/Deliverypage.css';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 // import '../layout/Layout.css'
 
 const DeliveryPage = () => {
 
+  const navigate = useNavigate();
   const [robots,setRobots]=useState([]) // 로봇 정보 담고
   const [selectRobot,setSelectRobot]=useState(null); // 지도에서 클릭한 로봇의 id
   // const [clickRobot,setClickRobot]=useState(); 
@@ -62,7 +64,14 @@ const DeliveryPage = () => {
 
   return (
     <div className='delivery-page'>
-      <div className='delivery-header'>팀장선</div>
+      <div className='delivery-header'>
+        Delivus
+        <div className='delivery-buttons'>
+          <button onClick={() => navigate('/maindash')}>대시보드</button>
+          <button onClick={() => navigate('/')}>주문 내역</button>
+        </div>
+      </div>
+      
       <div className='delivery-container'>
         {/* 지도와 사이드바 */}
         <div className='delivery-box'>
@@ -76,6 +85,7 @@ const DeliveryPage = () => {
           </div>
         </div>
       </div>
+
     </div>
   )
 }

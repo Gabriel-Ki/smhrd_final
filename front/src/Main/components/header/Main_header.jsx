@@ -1,22 +1,41 @@
 import React from 'react'
 import './Main_header.css'
+import { useNavigate } from 'react-router-dom';
 const Main_dash = ({robotsStatus}) => {
+  // console.log("Main_header.jsx 의 robotsStatus 데이터 :", robotsStatus);
 
-  console.log("Main_header.jsx 의 robotsStatus 데이터 :", robotsStatus);
+  const navigate = useNavigate();
+
+  const getStatusClass = (status) => {
+    switch(status){
+      case "대기 중": return "status-waiting";
+      case "가게 이동 중": return "status-moving";
+      case "픽업 대기": return "status-pickup";
+      case "목적지 이동 중": return "status-delivery";
+      case "배달 완료": return "status-complete";
+      default : return "Nothing";
+    }
+  };
+
 
   return (
     <div className='head-container'>
+      <div className='header-content'>
         <h3 className='header-title'>Delivus</h3>
+        <div className='header-buttons'>
+          <button onClick={() => navigate('/delivery')}>지도</button>
+          <button onClick={() => navigate('/')}>주문목록</button>
+          <button onClick={() => navigate('/maindash')}>대시보드</button>
+        </div>
+      </div>
         <div className='robot-status'>
           <span className='allrobot'>전체 로봇 {robotsStatus.total}</span> {/* 여기서 숫자api로 값 가져와서 넣은 곳 */}
           <div className='fliter'>
-            <span>대기 중 {robotsStatus["대기 중"]}</span>
-            <span>배차 대기 중 {robotsStatus["배차 대기 중"]}</span>
-            <span>가게 이동 중 {robotsStatus["가게 이동 중"]}</span>
-            <span>가게 도착 {robotsStatus["가게 도착"]}</span>
-            <span>목적지 이동 중 {robotsStatus["목적지 이동 중"]}</span>
-            <span>목적지 도착 {robotsStatus["목적지 도착"]}</span>
-            <span>회차 중 {robotsStatus["회차 중"]}</span>
+          <span className={getStatusClass("대기 중")}>대기 중 {robotsStatus["대기 중"] ?? 0}</span>
+            <span className={getStatusClass("가게 이동 중")}>가게 이동 중 {robotsStatus["가게 이동 중"] ?? 0}</span>
+            <span className={getStatusClass("픽업 대기")}>픽업 대기 {robotsStatus["픽업 대기"] ?? 0}</span>
+            <span className={getStatusClass("목적지 이동 중")}>목적지 이동 중 {robotsStatus["목적지 이동 중"] ?? 0}</span>
+            <span className={getStatusClass("배달 완료")}>배달 완료 {robotsStatus["배달 완료"] ?? 0}</span>
           </div>
           
         </div>

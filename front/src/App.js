@@ -9,16 +9,23 @@ import OrderItem from './orderList/components/order/OrderItem';
 import Orderpage from './orderList/Orderpage'
 import OrderSidebar from './orderList/components/sidebar/Ordersidebar'
 
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
 
 function App() {
   return (
-    <div className="App">
-      {/* <Maindash/> */}
-      <Orderpage/>
-      {/* <DeliveryPage></DeliveryPage> */}
-
-    </div>
+    <Router>
+      <div className="App"> 
+        <Routes>
+          <Route path="/" element={<Orderpage />} />
+          <Route path="/delivery" element={<DeliveryPage />} />
+          <Route path="/maindash" element={<Maindash />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
+
 
 export default App;
