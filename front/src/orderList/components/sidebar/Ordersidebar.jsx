@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import '../sidebar/OrderSidebar.css'
 
-const Ordersidebar = ({orders,selectedOrder}) => {
+const Ordersidebar = ({orders,selectedOrder,orderStatus}) => {
 
   // const [orderSide,setOrderSide]=useState([]);
 
@@ -28,7 +28,9 @@ const Ordersidebar = ({orders,selectedOrder}) => {
 
     console.log(selectedOrder);
     console.log(orders);
+    console.log(orderStatus)
 
+  
     const getStatusClass=(status)=>{
       if(status==='가게 도착' || status==='목적지 이동 중' || status==='목적지 도착') return "delivery";
       if(status==='배차 대기 중' || status==='대기 중' || status==='회차 중' ) return "waiting";
@@ -39,12 +41,52 @@ const Ordersidebar = ({orders,selectedOrder}) => {
       return(
         <div className='sidebar'>
           <div className='sidebar-noselect'>
-            내역을 선택하세요
+            주문 내역을 선택하세요
           </div>
         </div>
         
       )
     }
+
+    const handleAcceptOrder=async ()=>{
+      try{
+        await axios.post('http://localhost:5000/order/accept',{
+          orderId:selectedOrder,
+        });
+        alert('주문이 접수되었습니다');
+        window.location.reload();
+      }catch(err){
+        console.error('주문 접수 중 오류 : ', err)
+      }
+    }
+
+    if(orderStatus==='접수대기'){
+      return(
+        <div className='acceptorder-container'>
+          <h2>주문 번호 : {selectedOrder}</h2>
+          <p>주문을 접수하세요</p>
+          <div className='acceptorder-btnContent'>
+            <button className='order-cancelBtn'>주문 취소</button>
+            <button onClick={handleAcceptOrder} className='order-acceptBtn'>주문 접수</button>
+          </div>
+          
+        </div>
+      )
+    }
+
+    const handleCooking=async ()=>{
+      try{
+        await axios.post('http://localhost:5000/order/cooking',{
+          orderId:selectedOrder,
+        });
+        alert('배달이 시작되었습니다');
+        window.location.reload();
+      }catch(err){
+        console.error('로봇 픽업 중 오류 :', err)
+      }
+    }
+
+    
 
 
     const robotOrders = selectedOrder
@@ -57,10 +99,12 @@ const Ordersidebar = ({orders,selectedOrder}) => {
 
     console.log(itemList);
 
-    const orderStatsusList=["주문 대기","조리 중","배달 중","배달 완료"];
+    const orderStatsusList=["접수 대기","조리 중","배달 중","배달 완료"];
 
-    const currentStatus=orderStatsusList.indexOf(robotOrders[0]?.status || "주문 대기");
+    const currentStatus=orderStatsusList.indexOf(robotOrders[0]?.status || "접수 대기");
 
+
+    
 
 
 
@@ -116,28 +160,21 @@ const Ordersidebar = ({orders,selectedOrder}) => {
             <p >총액 </p> 
             <p>{robotOrders[0].total_price}원</p>
           </div>
-        </div>
 
-        {/* <div className="ordersidebar-order-status-container">
-          {orderStatsusList.map((status, index) => (
-            <div key={index} className="ordersidebar-order-status-item">
-              <span className={`orderstatus-dot ${index === currentStatus ? 'orderactive-status' : ''}`} />
-              <span className="ordersidebar-status-text">{status}</span>
-              <div className="ordersidebar-status-buttons">
-                {index <= currentStatus ? (
-                  <button className="ordersidebar-status-approve-btn">✅</button>
-                ) : (
-                  <button className="ordersidebar-status-disabled-btn" disabled>
-                    ✅
-                  </button>
-                )}
-                <button className="ordersidebar-status-cancel-btn">🔄</button>
-              </div>
-            </div>
-          ))}
-        </div> */}
+          <div>
+            {orderStatus ==='조리중' ? (
+              <button  onClick={handleCooking}> 배달 시작</button>
+            ):(
+              <></>
+            )}
+          </div>
+        </div>
     </div>
   )
+
+  
 }
+
+
 
 export default Ordersidebar
