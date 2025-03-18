@@ -61,8 +61,8 @@ const KakaoMap = ({ robots, onMarkerClick, clickRobot }) => {
     // 카카오네비 API에 필요한 좌표 준비 (경도,위도 순서)
     // const origin = `${parseFloat(clickRobot.robot_x)},${parseFloat(clickRobot.robot_y)}`;
     const origin = `${parseFloat(clickRobot.robot_y)},${parseFloat(clickRobot.robot_x)}`;
-    const destination = `${parseFloat(clickRobot.dest_x)},${parseFloat(clickRobot.dest_y)}`;
-    // const destination = `${parseFloat(clickRobot.dest_y)},${parseFloat(clickRobot.dest_x)}`;
+    // const destination = `${parseFloat(clickRobot.dest_x)},${parseFloat(clickRobot.dest_y)}`;
+    const destination = `${parseFloat(clickRobot.dest_y)},${parseFloat(clickRobot.dest_x)}`;
   
     const fetchRoute = async () => {
       const REST_API_KEY = "ed531a847334567de57d04550605bfce"; // 실제 앱에서는 환경변수로 관리하세요
@@ -111,10 +111,10 @@ const KakaoMap = ({ robots, onMarkerClick, clickRobot }) => {
         polyline.setMap(map);
         setRoutePolyline(polyline);
 
-        // 경로가 모두 보이도록 지도 범위 재설정
-        const bounds = new window.kakao.maps.LatLngBounds();
-        pathCoords.forEach((coord) => bounds.extend(coord));
-        map.setBounds(bounds);
+        // // 경로가 모두 보이도록 지도 범위 재설정
+        // const bounds = new window.kakao.maps.LatLngBounds();
+        // pathCoords.forEach((coord) => bounds.extend(coord));
+        // map.setBounds(bounds);
       } catch (error) {
         console.error("카카오네비 API 호출 오류:", error);
       }

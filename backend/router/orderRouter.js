@@ -58,26 +58,42 @@ router.post('/accept', async(req, res) => {
         where orders_idx=?` ;
         await connect.query(acceptUpdateSql,[orderId]);
 
-        const acceptFindRobotSql=`select robots_idx
-        from robots
-        where orders_idx is NULL`;
-        const [robot]= await connect.query(acceptFindRobotSql);
+        const acceptFindRobotSql=`UPDATE robots r
+            JOIN (
+                SELECT rc.robots_idx
+                FROM robots r
+                JOIN robots_status_logs rs ON r.robots_idx = rs.robots_idx
+                JOIN robots_coord_logs rc ON r.robots_idx = rc.robots_idx
+                JOIN admin a ON a.admin_idx = (SELECT admin_idx FROM orders WHERE orders_idx = ?)
+                WHERE r.orders_idx IS NULL
+                ORDER BY (6371 * ACOS(
+                    COS(RADIANS(a.store_x_coord)) * COS(RADIANS(rc.rbs_x_coord)) * 
+                    COS(RADIANS(rc.rbs_y_coord) - RADIANS(a.store_y_coord)) + 
+                    SIN(RADIANS(a.store_x_coord)) * SIN(RADIANS(rc.rbs_x_coord))
+                    )) ASC
+                LIMIT 1
+            ) AS closest_robot
+            ON r.robots_idx = closest_robot.robots_idx
+            SET r.orders_idx = ?`
 
-        if (robot.length>0){
-            const robotId=robot[0].robots_idx;
+        const [updateResult]= await connect.query(acceptFindRobotSql,[orderId,orderId]);
 
-            const acceptRobotUpdateSql=`update robots 
-            set orders_idx=? 
-            where robots_idx=?`
-            await connect.query(acceptRobotUpdateSql,[orderId,robotId]);
+        if (updateResult.affectedRows>0){
+            const getAssignedRobotSql=`SELECT robots_idx FROM robots where orders_idx=?`
 
-            const aceeptStatusUpdateSql=
-            `INSERT INTO robots_status_logs 
-            (robots_idx, status, updated_at)
-            VALUES (?, '가게 이동 중', NOW())`
-            await connect.query(aceeptStatusUpdateSql, [robotId]);
+            const [robotRows]= await connect.query(getAssignedRobotSql,[orderId]);
 
-            console.log('로봇이 주문에 배정됨')
+            if(robotRows.length>0){
+                const robotId=robotRows[0].robots_idx;
+
+                const robotStatusSql=
+                `INSERT INTO robots_status_logs 
+                (robots_idx, status, updated_at)
+                VALUES (?, '가게 이동 중', NOW())`
+
+                await connect.query(robotStatusSql, [robotId]);
+
+            }
         }else{
             console.log('배정 가능한 로봇 없음')
         }

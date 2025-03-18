@@ -3,29 +3,7 @@ import axios from 'axios';
 import '../sidebar/OrderSidebar.css'
 
 const Ordersidebar = ({orders,selectedOrder,orderStatus}) => {
-
-  // const [orderSide,setOrderSide]=useState([]);
-
   
-
-  // useEffect(()=>{
-  //   const axiosOrderSide=async ()=>{
-  //     try{
-  //       const response= await axios.get('http://localhost:5000/order/sidebar'); // 경로 수정하고 로봇 6개의 정보를 여기로 출력
-  //       setOrderSide(response.data);
-        
-  //     } catch(error){
-  //       console.error('로봇 정보를 가져오는 중 오류 :', error);
-  //     } 
-  //   }
-  //   axiosOrderSide();
-    
-  //   const interorderSide=setInterval(axiosOrderSide,10000); // 10초 마다 업데이트 하겠다
-
-  //   return ()=>clearInterval(interorderSide);
-
-  //   },[]);
-
     console.log(selectedOrder);
     console.log(orders);
     console.log(orderStatus)
