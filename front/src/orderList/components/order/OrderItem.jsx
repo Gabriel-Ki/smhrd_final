@@ -5,6 +5,9 @@ const OrderItem = ({ order, onSelect }) => {
   const handleClick = () => {
     onSelect(order.orders_idx, order.order_status);
   }
+
+  console.log(order.order_items);
+  
   
   // 주문 상태별 클래스 지정
   const getStatusClass = (status) => {
@@ -38,6 +41,7 @@ const OrderItem = ({ order, onSelect }) => {
           <span className="orderitem-id">[{order.store} #{order.orders_idx}] {order.total_price}원</span>
           {/* <span className="orderitem-payment">결제카드</span> */}
         </div>
+
         <div className="orderitem-details">
           {order.order_items.split(', ').map((item, index) => {
             if (index < 2) {
