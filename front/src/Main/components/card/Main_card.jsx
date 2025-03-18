@@ -38,9 +38,9 @@ const Main_card = ({gridmain}) => {
 
                     <div className = "log-container">
                         {gridmain.logs.map((log,index) => (
-                            <div key={index} style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                <div>{log.status}</div>
-                                <div>{log.updated_at}</div>
+                            <div className='log-list' key={index}>
+                                <span className='log-status'>{log.status}</span>
+                                <span className='log-time'>{log.updated_at}</span>
                             </div>
                         ))}
                     </div>

@@ -15,7 +15,7 @@
     gap: 30px;
 }
 
-.header-title{
+/* .header-title{
     font-family: 'Noto Sans KR';
     font-style: normal;
     font-weight: bold;
@@ -24,7 +24,7 @@
     color: #040404;
     margin-left: 20px;
     flex-shrink: 0;
-}
+} */
 .header-buttons{
     display: flex;
     gap: 200px;

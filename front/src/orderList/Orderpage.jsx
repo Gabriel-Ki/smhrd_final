@@ -50,7 +50,7 @@ const Orderpage = () => {
     <div className='orderpage'>
       
       <div className='common-header'>
-        Delivus
+        <span className='header-title' >Delivus</span>
         <div className='common-header-buttons'>
           <button  onClick={() => navigate('/maindash')}>대시보드</button>
           <button  onClick={() => navigate('/delivery')}>지도</button>

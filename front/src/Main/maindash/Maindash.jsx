@@ -38,9 +38,9 @@ const Maindash = () => {
   },[]);
 
   return (
-    <div>
-      <div className='maindash-header'>
-        Delivus
+    <div className='maindash'>
+      <div className='maindash-header common-header'>
+        <span className='header-title' >Delivus</span>
         <div className='common-header-buttons'>
           <button onClick={() => navigate('/delivery')}>지도</button>
           <button onClick={() => navigate('/')}>주문목록</button>

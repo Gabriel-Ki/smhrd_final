@@ -20,6 +20,9 @@ const Main_dash = ({robotsStatus}) => {
 
   return (
     <div className='head-container'>
+       {/* <div className='line-container'>
+          <div className='custom-line'></div>
+        </div> */}
       
         <div className='robot-status'>
           <span className='allrobot'>전체 로봇 {robotsStatus.total}</span> {/* 여기서 숫자api로 값 가져와서 넣은 곳 */}
@@ -32,9 +35,7 @@ const Main_dash = ({robotsStatus}) => {
           </div>
           
         </div>
-        <div className='line-container'>
-          <div className='custom-line'></div>
-        </div>
+       
     </div>
   )
 }

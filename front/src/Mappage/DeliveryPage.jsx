@@ -66,7 +66,7 @@ const DeliveryPage = () => {
   return (
     <div className='delivery-page'>
       <div className='common-header'>
-        Delivus
+      <span className='header-title' >Delivus</span>
         <div className='common-header-buttons'>
           <button onClick={() => navigate('/maindash')}>대시보드</button>
           <button onClick={() => navigate('/')}>주문 내역</button>
