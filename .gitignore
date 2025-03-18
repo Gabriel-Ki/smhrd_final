@@ -1,0 +1,27 @@
+# .gitignore 파일에 다음 내용 추가
+
+# Python 가상환경
+venv/
+env/
+ENV/
+.env/
+.venv/
+env.bak/
+venv.bak/
+.Python
+.python-version
+pyvenv.cfg
+pip-log.txt
+pip-delete-this-directory.txt
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Anaconda 관련
+anaconda/
+.conda/
+conda-env/
+
