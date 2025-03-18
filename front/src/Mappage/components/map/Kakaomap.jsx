@@ -16,7 +16,7 @@ const KakaoMap = ({ robots,onMarkerClick,clickRobot}) => {
     // ✅ 지도 생성
     const container = document.getElementById("map");
     const options = {
-      center: new window.kakao.maps.LatLng(35.150500, 126.916166),
+      center: new window.kakao.maps.LatLng(35.150220, 126.913850),
       level: 3
     };
     const newMap = new window.kakao.maps.Map(container, options);
