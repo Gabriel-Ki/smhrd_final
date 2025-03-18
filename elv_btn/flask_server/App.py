@@ -245,11 +245,3 @@ if __name__ == '__main__':
         video_thread.join(timeout=1.0)
         print("프로그램이 종료되었습니다.")
 
-
-# 🔹 Flask API 실행
-# if __name__ == '__main__':
-#     video_thread = threading.Thread(target=process_video)
-#     video_thread.daemon = True
-#     video_thread.start()
-    
-#     app.run(debug=False, host='0.0.0.0', port=5000)
