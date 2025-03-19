@@ -10,13 +10,9 @@ function RobotMarkers({ map, onMarkerClick, robots, clickRobot , robotPosition})
     robotMarkersRef.current.forEach(marker => marker.setMap(null));
     robotMarkersRef.current = [];
 
-    console.log(robotPosition);
-    console.log(robots);
-    console.log(clickRobot)
-
     // 새로운 로봇 마커 생성
     robots.forEach((robot) => {
-      const position =(clickRobot && robotPosition && robot.robots_idx === clickRobot.robots_idx) 
+      const position =(robot.robots_idx === parseInt(clickRobot) && robotPosition) 
         ? new window.kakao.maps.LatLng(robotPosition.x, robotPosition.y) 
         : new window.kakao.maps.LatLng(robot.robot_x, robot.robot_y);
 
@@ -31,7 +27,7 @@ function RobotMarkers({ map, onMarkerClick, robots, clickRobot , robotPosition})
         position,
         image: markerImage,
         // clickRobot가 null이면 모든 마커 표시, 아니면 선택된 로봇만 표시
-        map: (clickRobot === null || clickRobot === robot.robots_idx) ? map : null
+        map: (clickRobot === null || parseInt(clickRobot) === robot.robots_idx) ? map : null
       });
 
       // 마커 클릭 이벤트

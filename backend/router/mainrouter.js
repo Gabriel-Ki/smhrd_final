@@ -92,7 +92,13 @@ GROUP BY sl.status;`
 })
 
 router.get('/log', async(req,res)=>{
-    const sql="SELECT robot_id, status, destination, log_m,  DATE_FORMAT(log_t, '%H:%i') AS log_t FROM (SELECT robot_id, status, destination, log_m, log_t, ROW_NUMBER() OVER (PARTITION BY robot_id ORDER BY log_t DESC) AS rn FROM robot_logs) AS ranked_logs WHERE rn <= 3"
+    const sql=`SELECT robot_id, status, destination, log_m, 
+    DATE_FORMAT(log_t, '%H:%i') AS log_t 
+    FROM (
+    SELECT robot_id, status, destination, log_m, 
+    log_t, ROW_NUMBER() OVER (PARTITION BY robot_id ORDER BY log_t DESC) AS rn 
+    FROM robot_logs) AS ranked_logs 
+    WHERE rn <= 3`
     try{
         const [results]=await pool.query(sql)
         res.status(200).json(results)

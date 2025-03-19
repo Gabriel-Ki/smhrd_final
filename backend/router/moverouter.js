@@ -31,7 +31,7 @@ router.post('/', async (req, res) => {
             let moveIndex=0;
 
             const path=[
-                { y: 126.912773, x: 35.151954 }, // 시작점
+                { y: 126.913157, x: 35.152279 }, // 시작점
                 { y: 126.913124, x: 35.151670 },
                 { y: 126.913654, x: 35.151306 }, // 중간 지점
                 { y: 126.913948, x: 35.150957 },
@@ -65,20 +65,30 @@ router.post('/', async (req, res) => {
                 const distance=getDistance(nextPos.x, nextPos.y, storeX, storeY);
                 if (distance <=20){
                     console.log(`${robotId} 매장 반경 20m 내 도착 ! 픽업 대기로 상태 변경`)
-                    const statusChangeSql=`UPDATE robots_status_logs SET status='픽업 대기'
-                    WHERE robots_idx=?`
 
-                    await pool.query(statusChangeSql,[robotId]);
+                    const checkStatusSql=`SELECT status FROM robots_status_logs
+                                        WHERE robots_idx=?
+                                        ORDER BY updated_at desc LIMIT 1`
+
+                    const [statusRows]= await pool.query(checkStatusSql, [robotId]);
+                    console.log(statusRows);
+
+                    if (statusRows.length===0 || statusRows[0].status !=='픽업 대기'){
+                        const statusChangeSql=`INSERT INTO robots_status_logs (robots_idx, status, updated_at)
+                                                    VALUES (?, '픽업 대기', NOW())
+                                                    ON DUPLICATE KEY UPDATE updated_at = NOW()`
+                        await pool.query( statusChangeSql, [robotId]);
+                        console.log(`${robotId} 상태 변경 완료`)
+                    }else{
+                        console.log(`${robotId} 이미 픽업 대기 상태`)
+                    }
 
                     clearInterval(interval);
-
                 }
-
-
                 moveIndex++;
-            }, 3000);
+            }, 10000);
 
-        }, 5000);
+        }, 10000);
 
         res.json({message : "10초 후 로봇 이동이 시작됩니다.", robotId});
     } catch (error) {
