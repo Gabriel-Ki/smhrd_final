@@ -1,3 +1,11 @@
 .orderlist-wrapper{
   width: 100%;
+  max-height: 100%;
+  overflow-y: auto;
+  scrollbar-width: none; 
+}
+
+.orderlist-wrapper::-webkit-scrollbar{
+  display: none;
+  /* 크롬, 사파리 엣지에서 스크롤 숨기기 */
 }

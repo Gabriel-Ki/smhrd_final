@@ -23,13 +23,13 @@ const Orderpage = () => {
       }
     }
     axiosOrder();
-    const interOrder = setInterval(axiosOrder, 180000);
+    const interOrder = setInterval(axiosOrder, 1888000); // 이거 1000으로 바꾸면 배달 완료 후 자동으로 쿼리 실행된거 적용됨
     return () => clearInterval(interOrder);
   }, [])
 
   const onOrderClick = (orderId,status) => {
     console.log("클릭된 주문", orderId,status);
-    setSelectedOrder(orderId);
+    setSelectedOrder(orderId); 
     setSelectedOrderStatus(status);
   }
 

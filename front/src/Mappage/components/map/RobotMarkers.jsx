@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-function RobotMarkers({ map, onMarkerClick, robots, clickRobot }) {
+function RobotMarkers({ map, onMarkerClick, robots, clickRobot , robotPosition}) {
   const robotMarkersRef = useRef([]);
 
   useEffect(() => {
@@ -10,8 +10,16 @@ function RobotMarkers({ map, onMarkerClick, robots, clickRobot }) {
     robotMarkersRef.current.forEach(marker => marker.setMap(null));
     robotMarkersRef.current = [];
 
+    console.log(robotPosition);
+    console.log(robots);
+    console.log(clickRobot)
+
     // 새로운 로봇 마커 생성
     robots.forEach((robot) => {
+      const position =(clickRobot && robotPosition && robot.robots_idx === clickRobot.robots_idx) 
+        ? new window.kakao.maps.LatLng(robotPosition.x, robotPosition.y) 
+        : new window.kakao.maps.LatLng(robot.robot_x, robot.robot_y);
+
       // 마커 이미지 설정
       const markerImage = new window.kakao.maps.MarkerImage(
         "/img/robot1.png",
@@ -20,7 +28,7 @@ function RobotMarkers({ map, onMarkerClick, robots, clickRobot }) {
 
       // 마커 생성
       const marker = new window.kakao.maps.Marker({
-        position: new window.kakao.maps.LatLng(robot.robot_x, robot.robot_y),
+        position,
         image: markerImage,
         // clickRobot가 null이면 모든 마커 표시, 아니면 선택된 로봇만 표시
         map: (clickRobot === null || clickRobot === robot.robots_idx) ? map : null
@@ -39,7 +47,7 @@ function RobotMarkers({ map, onMarkerClick, robots, clickRobot }) {
       robotMarkersRef.current.forEach((marker) => marker.setMap(null));
       robotMarkersRef.current = [];
     };
-  }, [map, robots, clickRobot, onMarkerClick]);
+  }, [map, robots, clickRobot, onMarkerClick, robotPosition]);
 
   return null; // 화면에 직접 표시할 요소는 없고, 마커만 지도 위에 띄움
 }

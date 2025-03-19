@@ -1,0 +1,72 @@
+.order-container {
+    max-width: 600px;
+    margin: 50px auto;
+    background-color: #ffffff;
+    padding: 20px 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .order-container h1,
+  .order-container h2 {
+    text-align: center;
+    color: #333;
+  }
+  
+  .order-form label {
+    display: block;
+    margin-top: 15px;
+    color: #555;
+  }
+  
+  .order-form input[type="text"],
+  .order-form input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  .menu-item {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+  }
+  
+  .menu-item label {
+    flex: 1;
+    margin: 0;
+  }
+  
+  .menu-item input[type="number"] {
+    width: 80px;
+    margin-left: 10px;
+  }
+  
+  .total-price {
+    margin-top: 20px;
+    text-align: right;
+    font-size: 1.1em;
+    font-weight: bold;
+  }
+  
+  .submit-btn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    margin-top: 20px;
+    cursor: pointer;
+    font-size: 1em;
+  }
+  
+  .submit-btn:hover {
+    background-color: #45a049;
+  }
+  

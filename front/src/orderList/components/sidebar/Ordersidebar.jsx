@@ -3,10 +3,10 @@ import axios from 'axios';
 import '../sidebar/OrderSidebar.css'
 
 const Ordersidebar = ({orders,selectedOrder,orderStatus}) => {
-  
-    console.log(selectedOrder);
-    console.log(orders);
-    console.log(orderStatus)
+
+    // console.log(selectedOrder);
+    // console.log(orders);
+    // console.log(orderStatus)
 
   
     const getStatusClass=(status)=>{
@@ -52,6 +52,14 @@ const Ordersidebar = ({orders,selectedOrder,orderStatus}) => {
       )
     }
 
+    if(orderStatus==='완료'){
+      return(
+        <div className='completeorder-container'>
+          <h2>완료된 주문입니다</h2>
+        </div>
+      )
+    }
+
 
 
     const handleCooking=async ()=>{
@@ -81,19 +89,24 @@ const Ordersidebar = ({orders,selectedOrder,orderStatus}) => {
     
 
 
-    const robotOrders = selectedOrder
-    ? orders.filter(order => order.robots_idx === selectedOrder)
-    : [];
 
-    console.log(robotOrders[0]);
+    const robotOrders = selectedOrder
+    ? orders.filter(order => order.orders_idx === selectedOrder)
+    : [];
+    // console.log(selectedOrder);
+    // console.log(orders);
+    // console.log(robotOrders[0]);
 
     const itemList = robotOrders[0]?.order_items ? robotOrders[0].order_items.split(', ') : [];
 
-    console.log(itemList);
+    // console.log(itemList);
 
     const orderStatusList=["접수 대기","조리 중","배달 중","배달 완료"];
 
     const currentStatus=orderStatusList.indexOf(robotOrders[0]?.status || "접수 대기");
+
+
+    
 
 
     
@@ -108,7 +121,7 @@ const Ordersidebar = ({orders,selectedOrder,orderStatus}) => {
           {/* 헤더 */}
           <div className='ordersidebar-header'>
             <img src="./img/robot.png" alt="robot" width='30px' height='30px'/>
-            <h2 className="ordersidebar-header-text">Robot-00{selectedOrder}</h2>
+            <h2 className="ordersidebar-header-text">Robot-00{robotOrders[0].robots_idx}</h2>
           </div>
           {/* 주문 번호, 매장 */}
           <div className='ordersidebar-orderinfo'>
@@ -154,7 +167,7 @@ const Ordersidebar = ({orders,selectedOrder,orderStatus}) => {
           </div>
 
           <div>
-            {orderStatus ==='조리중' ? (
+            {robotOrders[0].delivery_status ==='픽업 대기' ? (
               <button  onClick={handleCooking} className='order-deliverBtn'> 배달 시작</button>
             ):(
               <></>
