@@ -1,10 +1,21 @@
 import { useEffect, useRef, useState } from "react";
 import RobotMarkers from "./RobotMarkers";
+import RobotMovement from "./RobotMovement";
 
 const KakaoMap = ({ robots, onMarkerClick, clickRobot }) => {
   const [map, setMap] = useState(null);
   const [routePolyline, setRoutePolyline] = useState(null);
   const [destinationMarker, setDestinationMarker] = useState(null);
+  const [robotPosition, setRobotPosition] = useState(() => ({
+    x: clickRobot ? parseFloat(clickRobot.robot_x) : 0,
+    y: clickRobot ? parseFloat(clickRobot.robot_y) : 0,
+  }));
+
+  // console.log(robots);
+  // console.log(clickRobot);
+
+
+  
 
   useEffect(() => {
     // ✅ API가 정상적으로 로드되었는지 확인
@@ -23,6 +34,10 @@ const KakaoMap = ({ robots, onMarkerClick, clickRobot }) => {
     setMap(newMap);
   }, []);
 
+  useEffect(()=>{
+    console.log("현재 로봇 위치 상태 :", robotPosition);
+  }, [robotPosition])
+
   useEffect(() => {
     if (!map) return;
 
@@ -37,12 +52,27 @@ const KakaoMap = ({ robots, onMarkerClick, clickRobot }) => {
       setRoutePolyline(null);
     }
 
-    if (!clickRobot) return;
+    if (!clickRobot || clickRobot===null) return;
 
     // 도착지 좌표 설정
+
+    let destinationX,destinationY;
+
+    if(clickRobot.delivery_status==='가게 이동 중'){
+      destinationX = parseFloat(clickRobot.store_x);
+      destinationY = parseFloat(clickRobot.store_y);
+    }else{
+      destinationX=parseFloat(clickRobot.dest_x);
+      destinationY=parseFloat(clickRobot.dest_y);
+    }
+
+
+
+
+    
     const destinationPosition = new window.kakao.maps.LatLng(
-      parseFloat(clickRobot.dest_x),
-      parseFloat(clickRobot.dest_y)
+      destinationX,
+      destinationY
     );
 
     // 도착지 마커 생성
@@ -59,10 +89,9 @@ const KakaoMap = ({ robots, onMarkerClick, clickRobot }) => {
     setDestinationMarker(marker);
 
     // 카카오네비 API에 필요한 좌표 준비 (경도,위도 순서)
-    // const origin = `${parseFloat(clickRobot.robot_x)},${parseFloat(clickRobot.robot_y)}`;
+    
     const origin = `${parseFloat(clickRobot.robot_y)},${parseFloat(clickRobot.robot_x)}`;
-    // const destination = `${parseFloat(clickRobot.dest_x)},${parseFloat(clickRobot.dest_y)}`;
-    const destination = `${parseFloat(clickRobot.dest_y)},${parseFloat(clickRobot.dest_x)}`;
+    const destination = `${parseFloat(destinationY)},${parseFloat(destinationX)}`;
   
     const fetchRoute = async () => {
       const REST_API_KEY = "ed531a847334567de57d04550605bfce"; // 실제 앱에서는 환경변수로 관리하세요
@@ -127,7 +156,11 @@ const KakaoMap = ({ robots, onMarkerClick, clickRobot }) => {
   return (
     <div>
       <div id="map" style={{ width: "100%", height: "700px", borderRadius: '15px' }}></div>
-      {map && <RobotMarkers map={map} onMarkerClick={onMarkerClick} robots={robots} clickRobot={clickRobot ? clickRobot.robots_idx : null} />}
+      {map && <RobotMarkers map={map} onMarkerClick={onMarkerClick} robots={robots} 
+      clickRobot={clickRobot ? clickRobot.robots_idx : null} 
+      robotPosition={robotPosition}/>}
+
+      <RobotMovement setRobotPosition={setRobotPosition} clickRobot={clickRobot}/>
     </div>
   );
 };

@@ -15,11 +15,13 @@ router.get('/', async(req, res) => {
     ROUND(od.dst_y_coord,6) AS dest_y, 
     GROUP_CONCAT(CONCAT(oi.menu_name, 'x', oi.quantity, ' ', oi.unit_price * oi.quantity, '원') SEPARATOR ', ') AS order_items, 
     o.total_price,
-    a.store
+    a.store,
+    ROUND(a.store_x_coord,6) AS store_x,
+    ROUND(a.store_y_coord,6) AS store_y
 FROM orders o
+INNER JOIN robots r ON o.orders_idx = r.orders_idx
 LEFT JOIN orders_items oi ON o.orders_idx = oi.orders_idx
 LEFT JOIN orders_destination od ON o.orders_idx = od.orders_idx
-LEFT JOIN robots r ON o.orders_idx = r.orders_idx
 LEFT JOIN robots_status_logs rs ON r.robots_idx = rs.robots_idx 
     AND rs.updated_at = (
         SELECT MAX(updated_at) 
