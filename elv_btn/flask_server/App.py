@@ -174,8 +174,13 @@ def process_video():
                 color = (0, 0, 255) if state == 'ON' else (255, 0, 0)
                 
                 # 🔹 바운딩 박스 그리기
-                cv2.rectangle(frame, (x1, y1), (x2, y2), color, 2)
-                cv2.putText(frame, f"{name} ({state})", (x1, y1 - 10),
+                if name == "alarm" or name == "led":
+                    cv2.rectangle(frame, (x1, y1), (x2, y2), (0,0,0), 2)
+                    cv2.putText(frame, f"{name}", (x1, y1 - 10),
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0,0,0), 2)
+                else :
+                    cv2.rectangle(frame, (x1, y1), (x2, y2), color, 2)
+                    cv2.putText(frame, f"{name} ({state})", (x1, y1 - 10),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.6, color, 2)
         
         else:
@@ -191,8 +196,13 @@ def process_video():
                 color = (0, 0, 255) if state == 'ON' else (255, 0, 0)
                 
                 # 🔹 바운딩 박스 그리기
-                cv2.rectangle(frame, (x1, y1), (x2, y2), color, 2)
-                cv2.putText(frame, f"{name} ({state})", (x1, y1 - 10),
+                if name == "alarm" or name == "led":
+                    cv2.rectangle(frame, (x1, y1), (x2, y2), (0,0,0), 2)
+                    cv2.putText(frame, f"{name}", (x1, y1 - 10),
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0,0,0), 2)
+                else :
+                    cv2.rectangle(frame, (x1, y1), (x2, y2), color, 2)
+                    cv2.putText(frame, f"{name} ({state})", (x1, y1 - 10),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.6, color, 2)
         
         # 화면에 출력
