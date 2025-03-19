@@ -97,7 +97,10 @@ const Ordersidebar = ({orders,selectedOrder,orderStatus}) => {
     // console.log(orders);
     // console.log(robotOrders[0]);
 
-    const itemList = robotOrders[0]?.order_items ? robotOrders[0].order_items.split(', ') : [];
+    const itemListRaw = robotOrders[0]?.order_items 
+    ? robotOrders[0].order_items.split(', ') 
+    : [];
+    const itemList=[...new Set(itemListRaw)];
 
     // console.log(itemList);
 

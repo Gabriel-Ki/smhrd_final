@@ -34,9 +34,27 @@ const KakaoMap = ({ robots, onMarkerClick, clickRobot }) => {
     setMap(newMap);
   }, []);
 
+
+
   useEffect(()=>{
     console.log("현재 로봇 위치 상태 :", robotPosition);
   }, [robotPosition])
+
+  useEffect(()=>{
+    if(clickRobot){
+      setRobotPosition({
+        x:parseFloat(clickRobot.robot_x),
+        y:parseFloat(clickRobot.robot_y)
+      })
+    }
+  },[clickRobot])
+
+  const updateRobotPosition=(newPosition)=>{
+    setRobotPosition(newPosition);
+    console.log(`로봇 위치 업데이트 : ${newPosition.x}, ${newPosition.y}`)
+  }
+
+
 
   useEffect(() => {
     if (!map) return;
@@ -160,7 +178,7 @@ const KakaoMap = ({ robots, onMarkerClick, clickRobot }) => {
       clickRobot={clickRobot ? clickRobot.robots_idx : null} 
       robotPosition={robotPosition}/>}
 
-      <RobotMovement setRobotPosition={setRobotPosition} clickRobot={clickRobot}/>
+      <RobotMovement setRobotPosition={updateRobotPosition} clickRobot={clickRobot}/>
     </div>
   );
 };

@@ -36,33 +36,49 @@ const RobotMovement = ({ setRobotPosition, clickRobot }) => {
     })
     .catch(error =>{
       console.error('로봇 이동 요청 실패 :', error)
+      setIsMoving(false);
     });
 
     return ()=>setIsMoving(false);
-    }, [clickRobot]);
+    }, [clickRobot, isMoving]);
 
     useEffect(()=>{
       if(!robotId) return ;
+      
+      let isFetching=false
 
       const fetchRobotPosition = async ()=>{
+        if(isFetching) return;
+
+        isFetching=true
+
         try{
           const response = await axios.get(`http://localhost:5000/move/${robotId}`);
           const {x,y} = response.data;
 
           console.log(`최신 로봇 위치 업데이트 : ${y},${x}`);
-          setRobotPosition({x,y});
-          console.log('setRobotPosition 호출됨!')
-          console.log('setRobotPosition 값 확인!: ', setRobotPosition)
+          setRobotPosition(prevPositon=>{
+            if(prevPositon.x !==x || prevPositon.y !==y ){
+              console.log(`위치 변경 감지 : (${prevPositon.x},${prevPositon.y})->(${x},${y})`);
+              return {x,y};
+            }
+            return prevPositon;
+          })
           
 
         }catch(error){
           console.error('로봇 위치 가져오는 중 오류 :', error);
+        }finally{
+          isFetching=false;
         }
       }
 
-      const interval=setInterval(fetchRobotPosition,3000);
+      // 초기 위치 즉시 가져오기
+      // fetchRobotPosition();
+
+      const interval=setInterval(fetchRobotPosition,5000);
       return ()=>clearInterval(interval);  
-    }, [robotId]);
+    }, [robotId,setRobotPosition]);
 
   // 📌 두 좌표 간 거리 계산 (Haversine 공식)
     
