@@ -60,7 +60,7 @@ router.post('/',async(req,res)=>{
             }finally{
                 delayedConnect.release();
             }
-        }, 5000) 
+        }, 2000) 
 
 
     }catch(err){

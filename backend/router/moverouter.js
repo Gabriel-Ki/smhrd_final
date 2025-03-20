@@ -86,9 +86,9 @@ router.post('/', async (req, res) => {
                     clearInterval(interval);
                 }
                 moveIndex++;
-            }, 5000);
+            }, 2000);
 
-        }, 5000);
+        }, 2000);
 
         res.json({message : "10초 후 로봇 이동이 시작됩니다.", robotId});
     } catch (error) {
