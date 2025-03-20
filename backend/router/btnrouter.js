@@ -15,12 +15,12 @@ router.post('/',async(req,res)=>{
         where orders_idx=?`
         await connect.query(orderUpdateSql,[orderId]);
 
-        const robotUpdateSql=`update robots_status_logs
-        set status='배달 완료'
-        where robots_idx=(
-            select robots_idx from robots where orders_idx=?
-        )
-        order by updated_at desc limit 1`
+        const robotUpdateSql=`INSERT INTO robots_status_logs 
+        (robots_idx, status, updated_at)
+        VALUES (
+        (SELECT robots_idx FROM robots WHERE orders_idx = ?), 
+        '배달 완료', 
+        NOW())`
         await connect.query(robotUpdateSql,[orderId]);
 
         const getRobotIdSql=`SELECT robots_idx FROM robots WHERE orders_idx=?`

@@ -31,7 +31,7 @@ const Main_dash = ({robotsStatus}) => {
             <span className={getStatusClass("가게 이동 중")}>가게 이동 중 {robotsStatus["가게 이동 중"] ?? 0}</span>
             <span className={getStatusClass("픽업 대기")}>픽업 대기 {robotsStatus["픽업 대기"] ?? 0}</span>
             <span className={getStatusClass("목적지 이동 중")}>목적지 이동 중 {robotsStatus["목적지 이동 중"] ?? 0}</span>
-            <span className={getStatusClass("배달 완료")}>배달 완료 {robotsStatus["배달 완료"] ?? 0}</span>
+            {/* <span className={getStatusClass("배달 완료")}>배달 완료 {robotsStatus["배달 완료"] ?? 0}</span> */}
           </div>
           
         </div>

@@ -7,9 +7,8 @@ const Main_card = ({gridmain}) => {
     const statusColors = {
         "대기 중": "red",
         "가게 이동 중": "orange",
-        "픽업 대기": "orange",
-        "목적지 이동 중": "blue",
-        "배달 완료": "green"
+        "픽업 대기": "green",
+        "목적지 이동 중": "blue"
     };
 
     return (
@@ -35,7 +34,7 @@ const Main_card = ({gridmain}) => {
                             <span className="end-label">{gridmain.destination}</span>
                         </div>
                     </div>
-
+                    
                     <div className = "log-container">
                         {gridmain.logs.map((log,index) => (
                             <div className='log-list' key={index}>
