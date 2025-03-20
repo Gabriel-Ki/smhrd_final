@@ -14,7 +14,7 @@ router.get('/grid_maincard', async(req,res)=>{
     LEFT JOIN robots r ON rs.robots_idx = r.robots_idx
 )
 SELECT 
-    r.robots_idx, 
+    r.robots_idx,   
     r.orders_idx, 
     o.destination, 
     rs.status, 

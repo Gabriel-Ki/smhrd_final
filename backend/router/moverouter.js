@@ -125,4 +125,135 @@ router.get('/:robotId', async(req,res)=>{
     }
 })
 
+
+
+
+router.post('/destination', async (req, res) => {
+    const {orderId, robotId, destX, destY}=req.body;
+    const connect = await pool.getConnection();
+
+    if(!orderId || !robotId || !destX || !destY){
+        return res.status(400).json({error : "필수 데이터가 없습니다"})
+    }
+
+    try {
+
+        await connect.beginTransaction();
+
+        // 1. 주문 상태 -> 배달 중
+
+        const endOrderUpdateSql=`
+        UPDATE orders 
+        SET order_status='배달중'
+        where orders_idx=?`
+        await connect.query(endOrderUpdateSql, [orderId]);
+
+        const endInsertRobotStatusSql=`
+        INSERT INTO robots_status_logs (robots_idx, status, updated_at)
+        VALUES (?, '목적지 이동 중', NOW())
+        ON DUPLICATE KEY UPDATE updated_at=NOW()`
+
+        await connect.query(endInsertRobotStatusSql, [robotId]);
+
+        await connect.commit();
+        connect.release();
+
+        console.log(`주문 (${orderId}) 상태 '배달중', 로봇(${robotId}) 상태 '목적지 이동 중' 설정 완료`)
+
+
+        console.log(`${robotId} 10초 후 목적지로 이동 시작 예정`)
+
+        setTimeout(async ()=>{
+            let destIndex=0;
+
+            const destPath=[
+                { y: 126.911953, x: 35.149272 }, // 시작점
+                { y: 126.910838, x: 35.150258 },
+                { y: 126.912537, x: 35.151778 }, // 중간 지점
+                { y: 126.914179, x: 35.150855 },
+                { y: 126.916067, x: 35.150604 },
+            ];
+
+
+            const interval=setInterval(async ()=>{
+                if(destIndex >= destPath.length){
+                    clearInterval(interval);
+                    console.log(`${robotId} 매장 도착 `)
+
+                    return;
+                }
+
+                const endNextPos=destPath[destIndex];
+
+                const endLagLngUpdateSql=`
+                UPDATE robots_coord_logs 
+                SET rbs_x_coord=?, rbs_y_coord=? 
+                WHERE robots_idx=?`
+
+                await pool.query(endLagLngUpdateSql,[endNextPos.x,endNextPos.y,robotId])
+
+                console.log(`${robotId} 이동 중: ${endNextPos.x}, ${endNextPos.y}`)
+
+
+                const endDistance=getDistance(endNextPos.x, endNextPos.y, parseFloat(destX), parseFloat(destY));
+                if (endDistance <=20){
+                    console.log(`${robotId} 도착지 반경 20m 내 도착 ! 배달완료로 상태 변경`)
+
+                   
+                    const endRobotStatusChangeSql=`
+                    INSERT INTO robots_status_logs (robots_idx, status, updated_at)
+                    VALUES (?, '배달 완료', NOW())
+                    ON DUPLICATE KEY UPDATE updated_at = NOW()`
+
+                    await pool.query(endRobotStatusChangeSql, [robotId]);
+
+                    const endOrderStatusChangeSql=`
+                    UPDATE orders
+                    SET order_status='완료'
+                    WHERE orders_idx=?`
+
+                    await pool.query(endOrderStatusChangeSql, [orderId])
+                   
+                    clearInterval(interval);
+
+                    setTimeout(async ()=>{
+                        const delayedConn= await pool.getConnection();
+                        try{
+                            await delayedConn.beginTransaction();
+
+                            // 로봇 상태 => 대기 중
+                            const resetRobotStatusSql=`
+                            INSERT INTO robots_status_logs ( robots_idx, status, updated_at)
+                            VALUES (?, '대기 중',NOW())
+                            ON DUPLICATE KEY UPDATE updated_at=NOW()`
+
+                            await delayedConn.query(resetRobotStatusSql, [robotId]);
+
+                            const clearOrderSql=`UPDATE robots SET orders_idx=NULL WHERE robots_idx=?`
+                            await delayedConn.query(clearOrderSql, [robotId]);
+
+                            await delayedConn.commit();
+                            console.log(`로봇 (${robotId}) -> 대기 중 , 주문 (${orderId}) 해제 완료`)
+                        }catch(err){
+                            await delayedConn.rollback();
+                            console.error(`로봇 (${robotId}) 상태 초기화 실패 :`, err);
+                        }finally{
+                            delayedConn.release();
+                        }
+                    }, 60000)
+                }
+                destIndex++;
+            }, 2000);
+
+        }, 2000);
+
+        res.json({message : "10초 후 로봇 목적지로 이동이 시작됩니다.", robotId, orderId});
+    } catch (error) {
+        console.error("🚨 로봇 목적지 이동 업데이트 오류:", error);
+        await connect.rollback();
+        connect.release()
+        res.status(500).json({ error: "로봇 목적지 이동 업데이트 중 오류 발생" , details: error.message});
+    }
+});
+
 module.exports = router;
