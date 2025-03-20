@@ -49,8 +49,12 @@ router.post('/accept', async(req, res) => {
     const {orderId}=req.body
     const connect=await pool.getConnection();
 
+    
+
     try{
         await connect.beginTransaction();
+
+        console.log('주문 접수 API 호출:', orderId);
 
 
         const acceptUpdateSql = `update orders 

@@ -76,7 +76,7 @@ const RobotMovement = ({ setRobotPosition, clickRobot }) => {
       // 초기 위치 즉시 가져오기
       // fetchRobotPosition();
 
-      const interval=setInterval(fetchRobotPosition,5000);
+      const interval=setInterval(fetchRobotPosition,2000);
       return ()=>clearInterval(interval);  
     }, [robotId,setRobotPosition]);
 

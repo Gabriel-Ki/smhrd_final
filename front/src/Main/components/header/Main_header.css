@@ -96,8 +96,8 @@
 
 .status-waiting { color: red; }      
 .status-moving { color: orange; }    
-.status-pickup { color: orange; }    
+.status-pickup { color: green; }    
 .status-delivery { color: blue; }     
-.status-complete { color: green; }    
+
 
 
