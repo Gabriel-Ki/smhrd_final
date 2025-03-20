@@ -4,10 +4,15 @@ import '../sidebar/OrderSidebar.css'
 
 const Ordersidebar = ({orders,selectedOrder,orderStatus}) => {
 
+  
+    
+
     // console.log(selectedOrder);
     // console.log(orders);
     // console.log(orderStatus)
 
+    console.log(selectedOrder);
+    console.log(orders);
   
     const getStatusClass=(status)=>{
       if(status==='가게 도착' || status==='목적지 이동 중' || status==='목적지 도착') return "delivery";
@@ -63,9 +68,15 @@ const Ordersidebar = ({orders,selectedOrder,orderStatus}) => {
 
 
     const handleCooking=async ()=>{
+      console.log('배달 시작 버튼 클릭됨')
+      console.log('selectOrder :', selectedOrder)
+      console.log('robotOrders', robotOrders[0])
       try{
-        await axios.post('http://localhost:5000/order/cooking',{
+        await axios.post('http://localhost:5000/move/destination',{
           orderId:selectedOrder,
+          robotId:robotOrders[0].robots_idx,
+          destX:robotOrders[0].dest_x,
+          destY:robotOrders[0].dest_y
         });
         alert('배달이 시작되었습니다');
         window.location.reload();
@@ -74,17 +85,20 @@ const Ordersidebar = ({orders,selectedOrder,orderStatus}) => {
       }
     }
 
-    const handleCompleted=async()=>{
-      try{
-        await axios.post('http://localhost:5000/btn',{
-          orderId:selectedOrder,
-        });
-        alert('배달이 완료되었습니다');
-        window.location.reload();
-      }catch(err){
-        console.error('배달 완료 오류: ',err)
-      }
-    }
+    // const handleCompleted=async()=>{
+    //   try{
+    //     await axios.post('http://localhost:5000/btn',{
+    //       orderId:selectedOrder,
+    //       robotId:robotOrders[0].robots_idx,
+    //       destX:robotOrders[0].dest_x,
+    //       destY:robotOrders[0].dest_y
+    //     });
+    //     alert('배달이 완료되었습니다');
+    //     window.location.reload();
+    //   }catch(err){
+    //     console.error('배달 완료 오류: ',err)
+    //   }
+    // }
 
     
 
@@ -97,6 +111,7 @@ const Ordersidebar = ({orders,selectedOrder,orderStatus}) => {
     // console.log(orders);
     // console.log(robotOrders[0]);
 
+    console.log(robotOrders[0]);
     const itemListRaw = robotOrders[0]?.order_items 
     ? robotOrders[0].order_items.split(', ') 
     : [];
@@ -175,11 +190,12 @@ const Ordersidebar = ({orders,selectedOrder,orderStatus}) => {
             ):(
               <></>
             )}
-            {orderStatus ==='배달중'?(
+
+            {/* {orderStatus ==='배달중'?(
               <button onClick={handleCompleted} className='order-completeBtn'>배달 완료</button>
             ):(
               <></>
-            )}
+            )} */}
           </div>
         </div>
     </div>

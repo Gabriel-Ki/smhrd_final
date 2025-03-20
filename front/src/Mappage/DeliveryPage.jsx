@@ -24,7 +24,7 @@ const DeliveryPage = () => {
     axiosRobot();
     
     // 3분(180000ms)마다 로봇 정보 업데이트
-    const intervalId = setInterval(axiosRobot, 10000);
+    const intervalId = setInterval(axiosRobot, 2000);
     
     return () => clearInterval(intervalId);
   }, []);
